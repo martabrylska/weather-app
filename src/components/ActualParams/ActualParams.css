@@ -1,0 +1,9 @@
+.actual-weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actual-weather div {
+    display: flex;
+}
