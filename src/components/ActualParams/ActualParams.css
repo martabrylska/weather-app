@@ -7,3 +7,7 @@
 .actual-weather div {
     display: flex;
 }
+
+.actual-weather p {
+    margin: 0 10px;
+}
