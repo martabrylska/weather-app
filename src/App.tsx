@@ -17,6 +17,8 @@ export const App = () => {
         temp: '',
         tempMax: '',
         tempMin: '',
+        desc: '',
+        short: '',
     });
     return (
       <CityContext.Provider value={{city, setCity}}>

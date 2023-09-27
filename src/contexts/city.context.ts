@@ -11,6 +11,8 @@ export const CityContext = createContext({
         temp: "",
         tempMax: "",
         tempMin: "",
+        desc: "",
+        short: "",
     },
     setCity: (city: City) => {},
 });

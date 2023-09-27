@@ -12,7 +12,6 @@ export const NextHoursParams = () => {
     const {city, setCity} = useContext(CityContext);
 
     const apiKey = process.env.REACT_APP_API_KEY;
-    console.log(apiKey);
 
     useEffect(() => {
         (async () => {
@@ -20,22 +19,25 @@ export const NextHoursParams = () => {
                 const resp = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&cnt=5&appid=${apiKey}&units=metric`);
                 const data = await resp.json();
                 const list = data.list;
+                console.log(list);
 
-                list.map((hour: any, i: number) => {
-                    setNextHoursWeather([...nextHoursWeather, {
-                        time: hour.dt,
+                list.forEach((hour: any, i: number) => {
+                    setNextHoursWeather(nextHoursWeather => [...nextHoursWeather, {
+                        time: hour.dt_txt.split(' '),
                         temp: hour.main.temp,
-                    }])
+                        icon: hour.weather[0].icon,
+                        desc: hour.weather[0].description,
+                    }]);
+                    console.log(nextHoursWeather)
                 })
             }
         })();
     }, [city.lat]);
 
-
     return <div className="next-hours">
         {
-            nextHoursWeather.map(hour => (
-                <SingleHourWeather nextHoursWeather={nextHoursWeather}></SingleHourWeather>
+            nextHoursWeather.map((hour, i) => (
+                <SingleHourWeather key={hour.time[1]} nextHoursWeather={nextHoursWeather[i]}/>
             ))
         }
     </div>

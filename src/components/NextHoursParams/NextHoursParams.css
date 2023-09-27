@@ -7,5 +7,15 @@
 
 .single-hour {
     display: flex;
+    align-items: center;
     flex-direction: column;
+    margin-top: 40px;
+}
+
+.single-hour p {
+    margin: 0;
+}
+
+.single-hour img {
+    width: 90%;
 }

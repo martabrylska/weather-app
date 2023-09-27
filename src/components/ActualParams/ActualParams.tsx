@@ -31,24 +31,29 @@ export const ActualParams = () => {
             if (city.lat && city.lon) {
                 const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}&units=metric`);
                 const data = await resp.json();
+                console.log(data);
 
                 setCity({
                     ...city,
                     temp: data.main.temp,
                     tempMax: data.main.temp_max,
                     tempMin: data.main.temp_min,
+                    desc: data.weather[0].description,
+                    short: data.weather[0].main,
                 })
             }
         })();
     }, [city.lat]);
 
+
     return (
         <div className="actual-weather">
-            <h1>{city.name}, {city.state}, {city.country}</h1>
-            <h2>{city.temp} °C</h2>
+            <h2>{city.name}, {city.state}, {city.country}</h2>
+            <h1>{city.temp}°C</h1>
+            <p></p>
             <div>
-                <p>H: {city.tempMax} °C</p>
-                <p>L: {city.tempMin} °C</p>
+                <p>H: {city.tempMax}°C</p>
+                <p>L: {city.tempMin}°C</p>
             </div>
         </div>
     );
