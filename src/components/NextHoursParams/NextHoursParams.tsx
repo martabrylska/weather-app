@@ -1,43 +1,41 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {SingleHourWeather} from "./SingleHourWeather";
+import {ShortTermWeather} from "../../types/weather";
+import {apiKey} from "../../constants";
+import {SearchContext} from "../../contexts/search.context";
 
-import "./NextHoursParams.css"
-import {CityContext} from "../../contexts/city.context";
-import {Weather} from "../../types/city";
+import "./NextHoursParams.css";
 
 export const NextHoursParams = () => {
 
-    const [nextHoursWeather, setNextHoursWeather] = useState<Weather[]>([]);
-
-    const {city, setCity} = useContext(CityContext);
-
-    const apiKey = process.env.REACT_APP_API_KEY;
+    const [nextHoursWeather, setNextHoursWeather] = useState<ShortTermWeather[]>([]);
+    const {search} = useContext(SearchContext);
 
     useEffect(() => {
         (async () => {
-            if (city.lat && city.lon) {
-                const resp = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&cnt=5&appid=${apiKey}&units=metric`);
+            if (search.lat && search.lon) {
+                setNextHoursWeather([]);
+                const resp = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${search.lat}&lon=${search.lon}&cnt=5&appid=${apiKey}&units=metric`);
                 const data = await resp.json();
                 const list = data.list;
-                console.log(list);
+                // console.log(list);
 
-                list.forEach((hour: any, i: number) => {
+                list.map((hour: any) => {
                     setNextHoursWeather(nextHoursWeather => [...nextHoursWeather, {
                         time: hour.dt_txt.split(' '),
                         temp: hour.main.temp,
                         icon: hour.weather[0].icon,
                         desc: hour.weather[0].description,
                     }]);
-                    console.log(nextHoursWeather)
                 })
             }
         })();
-    }, [city.lat]);
+    }, [search]);
 
     return <div className="next-hours">
         {
             nextHoursWeather.map((hour, i) => (
-                <SingleHourWeather key={hour.time[1]} nextHoursWeather={nextHoursWeather[i]}/>
+                <SingleHourWeather key={i} nextHoursWeather={nextHoursWeather[i]}/>
             ))
         }
     </div>
