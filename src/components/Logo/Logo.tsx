@@ -1,10 +1,10 @@
 import React from 'react';
 
+import logo from './logo.png';
 import './Logo.css';
 
 export const Logo = () => (
         <div className="logo">
-            <h1>Weather App</h1>
-            <img alt="app logo"/>
+            <img src={logo} alt="app logo"/>
         </div>
     );

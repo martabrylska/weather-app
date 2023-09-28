@@ -5,27 +5,26 @@ import {ActualParams} from "./components/ActualParams/ActualParams";
 import {NextHoursParams} from './components/NextHoursParams/NextHoursParams';
 import {NextDaysParams} from './components/NextDaysParams/NextDaysParams';
 import { SearchContext } from './contexts/search.context';
-import { CityContext } from './contexts/city.context';
 
 export const App = () => {
-    const [city, setCity] = useState({
-        name: "London",
-        state: "England",
-        country: "GB",
-        lat: '',
-        lon: '',
-        temp: '',
-        tempMax: '',
-        tempMin: '',
-        desc: '',
-        short: '',
+    const [search, setSearch] = useState({
+        name: "Warsaw",
+        state: "Masovian Voivodeship",
+        country: "PL",
+        lat: '52.232',
+        lon: '21.0067',
     });
+
     return (
-      <CityContext.Provider value={{city, setCity}}>
-        <Header/>
-        <ActualParams/>
-        <NextHoursParams/>
-        <NextDaysParams/>
-      </CityContext.Provider>
+
+          <SearchContext.Provider value={{search, setSearch}}>
+
+                  <Header/>
+                  <ActualParams/>
+
+                  <NextHoursParams/>
+                  <NextDaysParams/>
+          </SearchContext.Provider>
+
   );
 }
