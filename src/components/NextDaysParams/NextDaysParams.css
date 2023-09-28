@@ -1,11 +1,26 @@
 .next-days {
-    margin-top: 20px;
+    margin: 40px 30px;
+    padding: 10px 15px;
     display: flex;
     flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    background-color: #616565;
+    color: white;
+    border-radius: 12px;
 }
 
 .single-day {
     display: flex;
     align-items: center;
     justify-content: space-around;
+}
+
+.single-day p:first-child {
+    width: 100px;
+
+}
+
+.single-day img {
+    width: 18%;
 }
