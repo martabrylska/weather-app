@@ -1,11 +1,11 @@
 .next-hours {
-    margin: 40px 30px;
+    margin: 40px 10px;
     padding: 20px 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    background-color: #616565;
+    background-color: rgba(0,0,0,0.5);
     color: white;
     border-radius: 12px;
 }

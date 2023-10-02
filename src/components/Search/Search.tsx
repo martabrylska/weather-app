@@ -6,6 +6,8 @@ import {SearchContext} from "../../contexts/search.context";
 import {apiKey} from "../../constants";
 import {SearchCity} from "../../types/city";
 
+import "./Search.css";
+
 export const Search = () => {
     const {setSearch} = useContext(SearchContext);
     const [inputVal, setInputVal] = useState<string>('');
@@ -17,6 +19,8 @@ export const Search = () => {
             if (inputVal) {
                 const respCity = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&limit=5&appid=${apiKey}`);
                 const dataCity = await respCity.json();
+                console.log(dataCity);
+                console.log(new Date(1696032000).getUTCDate())
 
                 dataCity.map((city: any) => {
                     setSearchCityList(searchCityList => [
@@ -43,15 +47,18 @@ export const Search = () => {
 
 
     return (
-        <div>
+        <div className="search">
             <input type="text" value={inputVal} onChange={(e) => setInputVal(e.target.value)}/>
-            <div className="btns">
-            {
-                searchCityList.map((city: SearchCity, i: number) => {
-                    return <button onClick={() => handleClick(i)} key={i}>{`${city.name}, ${city.state}, ${city.country}`}</button>
-                })
-            }
-        </div>
+                {
+                    (searchCityList.length > 0) && <div className="btns">
+                        {
+                            searchCityList.map((city: SearchCity, i: number) => {
+                                return <button onClick={() => handleClick(i)}
+                                               key={i}>{`${city.name}, ${city.state ? city.state + "," : ""} ${city.country}`}</button>
+                            })
+                        }
+                    </div>
+                }
         </div>
     );
 }

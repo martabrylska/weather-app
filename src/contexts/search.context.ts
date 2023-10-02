@@ -6,8 +6,8 @@ export const SearchContext = createContext({
         name: '',
         state: '',
         country: '',
-        lat: '',
-        lon: '',
+        lat: 0,
+        lon: 0,
     },
     setSearch: (s: SearchCity) => {},
 });

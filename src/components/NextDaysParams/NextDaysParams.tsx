@@ -20,6 +20,7 @@ export const NextDaysParams = () => {
                 setNextNightsWeather([]);
                 const resp = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=metric`);
                 const data = await resp.json();
+                console.log(data);
                 const nightList = data.list.filter((period: any) => period.dt_txt.split(' ')[1] === '00:00:00');
                 const dayList = data.list.filter((period: any) => period.dt_txt.split(' ')[1] === '12:00:00');
 
