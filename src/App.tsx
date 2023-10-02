@@ -1,29 +1,31 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import {Header} from "./components/layouts/Header";
 import {ActualParams} from "./components/ActualParams/ActualParams";
 import {NextHoursParams} from './components/NextHoursParams/NextHoursParams';
 import {NextDaysParams} from './components/NextDaysParams/NextDaysParams';
 import { SearchContext } from './contexts/search.context';
-import { CityContext } from './contexts/city.context';
+import {Search} from "./components/Search/Search";
+import {useLocalStorage} from "./hooks/useLocalStorage";
+
 
 export const App = () => {
-    const [city, setCity] = useState({
-        name: "London",
-        state: "England",
-        country: "GB",
-        lat: '',
-        lon: '',
-        temp: '',
-        tempMax: '',
-        tempMin: '',
-    });
+
+    const [search, setSearch] = useLocalStorage('searched-city', {
+        name: "Warsaw",
+        state: "Masovian Voivodeship",
+        country: "PL",
+        lat: 52.232,
+        lon: 21.0067,
+    })
+
     return (
-      <CityContext.Provider value={{city, setCity}}>
-        <Header/>
-        <ActualParams/>
-        <NextHoursParams/>
-        <NextDaysParams/>
-      </CityContext.Provider>
+
+          <SearchContext.Provider value={{search, setSearch}}>
+                  <Search/>
+                  <ActualParams/>
+                  <NextHoursParams/>
+                  <NextDaysParams/>
+          </SearchContext.Provider>
+
   );
 }
