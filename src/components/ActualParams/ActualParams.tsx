@@ -1,49 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {apiKey} from "../../constants";
 import {SearchContext} from "../../contexts/search.context";
 import {ActualWeather} from "../../types/weather";
 import {capitalizeFirstLetter} from "../../utils/capitalizeFirstLetter";
 
 import "./ActualParams.css";
 
-export const ActualParams = () => {
+interface Props {
+    actualWeather: ActualWeather;
+}
+
+export const ActualParams = (props: Props) => {
+
+    const {actualWeather} = props;
 
     const {search} = useContext(SearchContext);
-    const [actualWeather, setActualWeather] = useState<ActualWeather>({
-        temp: 0,
-        tempMax: 0,
-        tempMin: 0,
-        desc: '',
-        short: '',
-        timezone: 0,
-    });
-
-    const [link, setLink] = useState<string>('../../../public/haze.png')
+    const [link, setLink] = useState<string>('../../../public/haze.png');
 
     useEffect(() => {
-        (async () => {
-            if (search.lat && search.lon) {
-                const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=metric`);
-                const data = await resp.json();
-                console.log(data);
-                console.log(new Date(1695965195).getUTCFullYear())
-
-                setActualWeather({
-                    temp: data.main.temp,
-                    tempMax: data.main.temp_max,
-                    tempMin: data.main.temp_min,
-                    desc: data.weather[0].description,
-                    short: data.weather[0].main,
-                    timezone: data.timezone,
-                })
-            }
-        })();
-    }, [search]);
-
-    useEffect(() => {
+        const localTime = new Date((actualWeather.time + actualWeather.timezone) * 1000).getUTCHours();
         if (actualWeather.short.toLowerCase() === "clouds" && actualWeather.desc.toLowerCase() === "few clouds") {
-            (new Date().getHours() > 6 && new Date().getHours() < 20) ? setLink(`../../../few-clouds.png`) : setLink(`../../../few-cloudsn.png`);
-        } else if (["clear", "clouds", "rain", "snow"].includes(actualWeather.short.toLowerCase()) && (new Date().getHours() < 6 || new Date().getHours() > 20)) {
+            (localTime > 6 && localTime < 20) ? setLink(`../../../few-clouds.png`) : setLink(`../../../few-cloudsn.png`);
+        } else if (["clear", "clouds", "rain", "snow"].includes(actualWeather.short.toLowerCase()) && (localTime < 6 || localTime > 20)) {
             setLink(`../../../${actualWeather.short.toLowerCase()}n.png`);
         } else if (["clear", "clouds", "rain", "snow", "thunderstorm"].includes(actualWeather.short.toLowerCase())) {
             setLink(`../../../${actualWeather.short.toLowerCase()}.png`);
@@ -63,6 +40,7 @@ export const ActualParams = () => {
             }>
             </div>
             <div className="actual-weather">
+                <p>{new Date((actualWeather.time + actualWeather.timezone) * 1000).toUTCString()}</p>
                 <h2>{search.name}</h2>
                 <h3>{search.state &&
                     `${search.state}, `

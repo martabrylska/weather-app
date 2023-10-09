@@ -1,12 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {SingleHourWeather} from "./SingleHourWeather";
-import {ShortTermWeather} from "../../types/weather";
+import {ActualWeather, ShortTermWeather} from "../../types/weather";
 import {apiKey} from "../../constants";
 import {SearchContext} from "../../contexts/search.context";
 
 import "./NextHoursParams.css";
 
-export const NextHoursParams = () => {
+interface Props {
+    timezone: number;
+}
+
+export const NextHoursParams = (props: Props) => {
 
     const [nextHoursWeather, setNextHoursWeather] = useState<ShortTermWeather[]>([]);
     const {search} = useContext(SearchContext);
@@ -22,10 +26,11 @@ export const NextHoursParams = () => {
 
                 list.map((hour: any) => {
                     setNextHoursWeather(nextHoursWeather => [...nextHoursWeather, {
-                        time: hour.dt_txt.split(' '),
+                        time: hour.dt,
                         temp: hour.main.temp,
                         icon: hour.weather[0].icon,
                         desc: hour.weather[0].description,
+                        pod: hour.sys.pod,
                     }]);
                 })
             }
@@ -35,7 +40,7 @@ export const NextHoursParams = () => {
     return <div className="next-hours">
         {
             nextHoursWeather.map((hour, i) => (
-                <SingleHourWeather key={i} nextHoursWeather={nextHoursWeather[i]}/>
+                <SingleHourWeather key={i} nextHoursWeather={nextHoursWeather[i]} timezone={props.timezone}/>
             ))
         }
     </div>

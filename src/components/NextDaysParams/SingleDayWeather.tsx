@@ -4,6 +4,8 @@ import {ShortTermWeather} from "../../types/weather";
 interface Props {
     nextDaysWeather: ShortTermWeather;
     nextNightsWeather: ShortTermWeather;
+    time: number;
+    timezone: number;
 }
 
 export const SingleDayWeather = (props: Props) => {
@@ -14,9 +16,11 @@ export const SingleDayWeather = (props: Props) => {
         <div className="single-day">
             <p>
                 {
-                    (new Date(props.nextDaysWeather.time[0])).getDay() === new Date().getDay()
+                    (new Date((props.nextNightsWeather.time + props.timezone) * 1000).getUTCDay() === new Date((props.time + props.timezone)*1000).getUTCDay()
+                    ||
+                        new Date((props.nextDaysWeather.time + props.timezone) * 1000).getUTCDay() === new Date((props.time + props.timezone)*1000).getUTCDay())
                     ? 'Today'
-                    : days[(new Date(props.nextDaysWeather.time[0])).getDay()]}
+                    : days[(new Date((props.nextDaysWeather.time + props.timezone) * 1000)).getUTCDay()]}
             </p>
             <img
                 alt={`${props.nextDaysWeather.desc}`}

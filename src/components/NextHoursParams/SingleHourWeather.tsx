@@ -2,13 +2,15 @@ import React from 'react';
 import {ShortTermWeather} from "../../types/weather";
 
 interface Props {
-    nextHoursWeather: ShortTermWeather
+    nextHoursWeather: ShortTermWeather;
+    timezone: number;
 }
 
-export const SingleHourWeather = (props: Props) =>  (
-        <div className="single-hour">
+export const SingleHourWeather = (props: Props) =>  {
+
+        return <div className="single-hour">
             <p>
-                {props.nextHoursWeather.time[1].substring(0,5)}
+                {`${(new Date(((props.nextHoursWeather.time + props.timezone) * 1000))).getUTCHours()}:00`}
             </p>
             <img
                 alt={`${props.nextHoursWeather.desc}`}
@@ -17,4 +19,4 @@ export const SingleHourWeather = (props: Props) =>  (
                 {Number(props.nextHoursWeather.temp).toFixed()}°
             </p>
         </div>
-    );
+};
