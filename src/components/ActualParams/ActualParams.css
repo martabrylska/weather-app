@@ -10,8 +10,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    right: 0;
+    bottom: 0;
     width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
     background-image: url("../../../public/haze.png");
     background-color: rgba(0, 0, 0, 0.5);
     background-position: center;
@@ -21,24 +24,74 @@
 
 .actual-weather div {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+}
+
+.actual-weather div div {
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border-radius: 12px;
+    flex-direction: column;
+    width: 82px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.actual-weather div div p {
+    font-size: 13px;
+    margin: 3px;
+    text-align: center;
 }
 
 .actual-weather p {
     margin: 10px;
 }
 
-.actual-weather h2 {
-    margin: 10px 50px;
-    text-align: center;
+.actual-weather div p {
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+
+/*.actual-weather h2 {*/
+/*    margin: 10px 50px;*/
+/*    text-align: center;*/
+/*    font-weight: normal;*/
+/*}*/
+
+.actual-weather .state {
+    font-size: 18px;
     font-weight: normal;
 }
 
-.actual-weather h3 {
-    font-weight: normal;
-}
-
-.actual-weather h1 {
+.actual-weather .temp {
     margin: 5px auto 15px;
     font-size: 50px;
     font-weight: normal;
+}
+
+.actual-weather .actual-weather-name {
+    font-size: 24px;
+    margin: 20px;
+}
+
+.actual-weather .actual-weather-name p {
+    margin: 10px 0 10px 20px;
+}
+
+.actual-weather-name button {
+    position: relative;
+    top:0;
+    left: 0;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.actual-weather-name button:hover {
+    color: #FADA63;
 }

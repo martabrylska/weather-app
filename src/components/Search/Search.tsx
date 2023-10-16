@@ -7,6 +7,8 @@ import {apiKey} from "../../constants";
 import {SearchCity} from "../../types/city";
 
 import "./Search.css";
+import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const Search = () => {
     const {setSearch} = useContext(SearchContext);
@@ -49,6 +51,7 @@ export const Search = () => {
     return (
         <div className="search">
             <input type="text" value={inputVal} onChange={(e) => setInputVal(e.target.value)}/>
+            <div className="magn-glass"><FontAwesomeIcon icon={solid("magnifying-glass")} /></div>
                 {
                     (searchCityList.length > 0) && <div className="btns">
                         {
