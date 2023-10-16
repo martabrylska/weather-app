@@ -1,30 +1,22 @@
 import React from 'react';
-import './App.css';
-import {ActualParams} from "./components/ActualParams/ActualParams";
-import {NextHoursParams} from './components/NextHoursParams/NextHoursParams';
-import {NextDaysParams} from './components/NextDaysParams/NextDaysParams';
-import { SearchContext } from './contexts/search.context';
-import {Search} from "./components/Search/Search";
-import {useLocalStorage} from "./hooks/useLocalStorage";
-import {WeatherParams} from "./components/WeatherParams/WeatherParams";
+import {Route, Routes} from "react-router-dom";
+import {Home} from "./components/Home/Home";
+import {Register} from "./components/Register/Register";
+import {LoggIn} from "./components/LoggIn/LoggIn";
+import {FavoritesList} from "./components/Favorites/FavoritesList";
+import {Header} from "./components/Header/Header";
 
 
 export const App = () => {
-
-    const [search, setSearch] = useLocalStorage('searched-city', {
-        name: "Warsaw",
-        state: "Masovian Voivodeship",
-        country: "PL",
-        lat: 52.232,
-        lon: 21.0067,
-    })
-
     return (
-
-          <SearchContext.Provider value={{search, setSearch}}>
-                  <Search/>
-                  <WeatherParams/>
-          </SearchContext.Provider>
-
-  );
+        <>
+            <Header/>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/logg-in" element={<LoggIn/>}/>
+                <Route path="/favorites" element={<FavoritesList userId={''}/>}/>
+            </Routes>
+        </>
+    );
 }
