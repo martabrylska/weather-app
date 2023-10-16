@@ -1,0 +1,36 @@
+.header {
+    height: 80px;
+    max-width: 800px;
+    margin: 0 auto;
+    /*padding: 30px 70px 20px;*/
+    background-color: rgba(0, 0, 0, 0.5);
+    /*box-sizing: border-box;*/
+}
+
+.header div {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    height: 80px;
+    max-width: 400px;
+
+}
+
+.header-link {
+    font-size: 25px;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.header-link:hover {
+    color: #FADA63;
+}
+
+.header img {
+    width: 60px;
+    padding: 10px;
+    border-radius: 50%;
+}
