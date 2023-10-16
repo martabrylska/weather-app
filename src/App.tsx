@@ -6,6 +6,7 @@ import {NextDaysParams} from './components/NextDaysParams/NextDaysParams';
 import { SearchContext } from './contexts/search.context';
 import {Search} from "./components/Search/Search";
 import {useLocalStorage} from "./hooks/useLocalStorage";
+import {WeatherParams} from "./components/WeatherParams/WeatherParams";
 
 
 export const App = () => {
@@ -22,9 +23,7 @@ export const App = () => {
 
           <SearchContext.Provider value={{search, setSearch}}>
                   <Search/>
-                  <ActualParams/>
-                  <NextHoursParams/>
-                  <NextDaysParams/>
+                  <WeatherParams/>
           </SearchContext.Provider>
 
   );

@@ -1,4 +1,5 @@
 export interface ActualWeather {
+        time: number,
         temp: number,
         tempMax: number,
         tempMin: number,
@@ -8,8 +9,9 @@ export interface ActualWeather {
     }
 
 export interface ShortTermWeather {
-        time: string[],
+        time: number,
         temp: number,
         desc: string,
         icon: string,
+        pod: string,
 }
