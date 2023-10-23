@@ -24,6 +24,7 @@ export interface ShortTermWeather {
 }
 
 export interface Favorites {
+        id: string;
         name: string,
         state: string,
         country: string,
