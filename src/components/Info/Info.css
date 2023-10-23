@@ -1,0 +1,12 @@
+.info {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 30px;
+    text-align: center;
+    margin: 30px auto;
+    width: 70%;
+    max-width: 400px;
+    font-size: 18px;
+    line-height: 30px;
+}

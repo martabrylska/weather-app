@@ -10,6 +10,11 @@
     text-align: center;
 }
 
+.register .msg {
+    font-size: 14px;
+    color: #a61717;
+}
+
 .register label {
     padding-left: 5px;
 }

@@ -1,28 +1,31 @@
-import React, {SyntheticEvent, useState} from 'react';
+import React, {SyntheticEvent, useContext, useState} from 'react';
 import {Info} from "../Info/Info";
 
 import "../Register/Register.css";
+import {LoginContext} from "../../contexts/login.context";
 
 
-export const LoggIn = () => {
+export const Login = () => {
 
-    const [id, setId] = useState(null);
+    const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
     const [form, setForm] = useState({
         name: '',
         password: '',
     });
+    const [msg, setMsg] = useState('');
 
-    const loggIn = async (e: SyntheticEvent) => {
+    const signIn = async (e: SyntheticEvent) => {
         e.preventDefault();
 
         // setLoading(true);
 
-        try{
-            const res = await fetch(`http://localhost:3001/user`, {
-                method: 'GET',
+        try {
+            const res = await fetch(`http://localhost:3001/auth/login`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: "include",
                 body: JSON.stringify({
                     ...form,
                 }),
@@ -30,12 +33,32 @@ export const LoggIn = () => {
 
             const data = await res.json();
 
-            setId(data.id);
+            setIsLoggedIn(data.isSuccess);
+
+            if (data.msg) {
+                setMsg(data.msg);
+            }
 
         } finally {
             // setLoading(false);
         }
 
+    }
+
+    const signOut = async () => {
+        try {
+            const res = await fetch(`http://localhost:3001/auth/logout`, {
+                credentials: "include",
+            });
+
+            const data = await res.json();
+
+            setIsLoggedIn(!data.isSuccess);
+            updateForm('password', '');
+            updateForm('name', '');
+    } finally {
+        // setLoading(false);
+    }
     }
 
 
@@ -46,14 +69,19 @@ export const LoggIn = () => {
         }))
     }
 
-    if (id) {
-        return <Info text={`You have been successfully logged in.`}/>
+    if (isLoggedIn) {
+        return(
+        <div className="register">
+            <Info text={`You are logged in.`}/>
+            <button onClick={signOut}>Sign out</button>
+        </div>)
     }
 
 
-    return <form action="" className="register" onSubmit={loggIn}>
+    return <form action="" className="register" onSubmit={signIn}>
         <div className="actual-weather-photo"></div>
         <h1>Logg in to your account:</h1>
+        <p className="msg">{msg}</p>
         <p>
             <label>
                 Name: <br/>
@@ -61,7 +89,7 @@ export const LoggIn = () => {
                     type="text"
                     name="name"
                     required
-                    maxLength={99}
+                    maxLength={20}
                     value={form.name}
                     onChange={e => updateForm('name', e.target.value)}
                 />
@@ -74,12 +102,12 @@ export const LoggIn = () => {
                     type="password"
                     name="password"
                     required
-                    maxLength={99}
+                    maxLength={20}
                     value={form.password}
                     onChange={e => updateForm('password', e.target.value)}/>
             </label>
         </p>
-        <button>Logg in</button>
+        <button>Sign in</button>
     </form>
 
 }
