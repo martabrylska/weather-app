@@ -56,7 +56,7 @@ export const NextDaysParams = (props: Props) => {
                 })
             }
         })();
-    }, [props.actualWeather]);
+    }, [search]);
 
 
     return <div className="next-days">

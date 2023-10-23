@@ -51,7 +51,7 @@
 }
 
 .actual-weather div p {
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 30px;
 }
 
@@ -93,5 +93,9 @@
 }
 
 .actual-weather-name button:hover {
+    color: #FADA63;
+}
+
+.actual-weather-name button.added {
     color: #FADA63;
 }

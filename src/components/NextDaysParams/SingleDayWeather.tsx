@@ -1,5 +1,6 @@
 import React from 'react';
 import {ShortTermWeather} from "../../types/weather";
+import {days} from "../../utils/days";
 
 interface Props {
     nextDaysWeather: ShortTermWeather;
@@ -9,8 +10,6 @@ interface Props {
 }
 
 export const SingleDayWeather = (props: Props) => {
-
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     return (
         <>

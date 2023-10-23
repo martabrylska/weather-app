@@ -28,7 +28,7 @@ export const Search = () => {
                     setSearchCityList(searchCityList => [
                         ...searchCityList, {
                             name: city.name,
-                            state: city.state,
+                            state: city.state ? city.state : '',
                             country: city.country,
                             lat: city.lat,
                             lon: city.lon,
