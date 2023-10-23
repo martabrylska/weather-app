@@ -4,6 +4,8 @@ import {ActualWeather} from "../../types/weather";
 import {capitalizeFirstLetter} from "../../utils/capitalizeFirstLetter";
 
 import "./ActualParams.css";
+import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface Props {
     actualWeather: ActualWeather;
@@ -13,7 +15,7 @@ export const ActualParams = (props: Props) => {
 
     const {actualWeather} = props;
 
-    const {search} = useContext(SearchContext);
+    const {search, setSearch} = useContext(SearchContext);
     const [link, setLink] = useState<string>('../../../public/haze.png');
 
     useEffect(() => {
@@ -41,18 +43,31 @@ export const ActualParams = (props: Props) => {
             </div>
             <div className="actual-weather">
                 <p>{new Date((actualWeather.time + actualWeather.timezone) * 1000).toUTCString()}</p>
-                <h2>{search.name}</h2>
-                <h3>{search.state &&
-                    `${search.state}, `
-                }{search.country}</h3>
-                <h1>{Number(actualWeather.temp).toFixed()}°</h1>
-                <p>{capitalizeFirstLetter(actualWeather.desc)}</p>
-                <div>
-                    <p>H: {Number(actualWeather.tempMax).toFixed()}°</p>
-                    <p>L: {Number(actualWeather.tempMin).toFixed()}°</p>
+                <div className="actual-weather-name">
+                    <p>{search.name}</p>
+                    <button><FontAwesomeIcon icon={solid("heart")}/></button>
                 </div>
+                <p className="state">{search.state &&
+                    `${search.state}, `
+                }{search.country}</p>
+                <p>{capitalizeFirstLetter(actualWeather.desc)}</p>
+                <p className="temp">{actualWeather.temp.toFixed()}°</p>
+                <p>Feels like: {Number(actualWeather.tempSensed).toFixed()}°</p>
+                <div>
+                    <p>H: {actualWeather.tempMax.toFixed()}°</p>
+                    <p>L: {actualWeather.tempMin.toFixed()}°</p>
+                </div>
+                <div>
+                    <div><p>Cloudiness:</p> <p> {actualWeather.clouds}%</p></div>
+                    <div><p>Humidity:</p> <p>{actualWeather.humidity}%</p></div>
+                    <div><p>Pressure:</p> <p>{actualWeather.pressure}hPa</p></div>
+                    <div><p>Rain:</p> <p>{actualWeather.rain.toFixed(1)}mm</p></div>
+                    <div><p>Snow:</p> <p>{actualWeather.snow.toFixed(1)}mm</p></div>
+                    <div><p>Wind:</p> <p>{(actualWeather.wind * 3600 / 1000).toFixed()}km/h</p></div>
+                </div>
+
             </div>
-    </>
+        </>
 
     );
 }

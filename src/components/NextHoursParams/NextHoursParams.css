@@ -1,6 +1,8 @@
 .next-hours {
-    margin: 40px 10px;
+    margin: 35px auto 40px;
     padding: 20px 15px;
+    min-width: 210px;
+    max-width: 510px;
     display: flex;
     flex-direction: row;
     align-items: center;
