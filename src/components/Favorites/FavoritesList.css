@@ -6,7 +6,6 @@
 .fav-list {
     display: flex;
     flex-direction: column;
-    /*justify-content: space-evenly;*/
     align-items: center;
     padding: 0;
 }
@@ -14,7 +13,7 @@
 .fav-list li {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     height: 100px;
     font-size: 12px;
@@ -22,7 +21,6 @@
     background-color: rgba(0, 0, 0, 0.5);
     background-position: center;
     background-size: cover;
-    z-index: -1;
     margin: 5px auto;
     border-radius: 12px;
 }
@@ -31,3 +29,25 @@
     width: 80px;
     text-align: center;
 }
+
+.fav-list p.param {
+    background-color: rgba(0,0,0,0.5);
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    border-radius: 12px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.fav-list p.remove {
+    color: rgba(0,0,0,0.5);
+    font-size: 20px;
+    width: 15px;
+    cursor: pointer;
+    pointer-events: auto;
+}
+.fav-list p.remove:hover {
+    color: rgba(255,0,0,0.5);
+}
+
