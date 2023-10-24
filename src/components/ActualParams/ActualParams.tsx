@@ -20,7 +20,7 @@ export const ActualParams = (props: Props) => {
     const {search} = useContext(SearchContext);
     const [link, setLink] = useState<string>('../../../public/haze.png');
     const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
-    const [fav, setFav] = useState('');
+    const [isFav, setIsFav] = useState('');
 
     useEffect(() => {
         actualWeatherSetLink(actualWeather, setLink);
@@ -28,21 +28,18 @@ export const ActualParams = (props: Props) => {
 
     useEffect(() => {
         (async () => {
-            try{
-                console.log(search);
+            try {
                 const res = await fetch(`http://localhost:3001/city/get-one?lat=${search.lat}&lon=${search.lon}`, {
                     credentials: "include",
                 })
-
-                const data = await res.json() ;
-                console.log(data);
-                if (data.message) {
+                const data = await res.json();
+                if (data.message === 'Unauthorized') {
                     setIsLoggedIn(false);
                 }
                 if (data.id) {
-                    setFav('y')
+                    setIsFav(data.id)
                 } else {
-                    setFav('')
+                    setIsFav('')
                 }
             } finally {
                 // setLoading(false);
@@ -53,8 +50,7 @@ export const ActualParams = (props: Props) => {
 
     const saveToFavorites = () => {
         (async () => {
-            console.log(search);
-            try{
+            try {
                 const res = await fetch(`http://localhost:3001/city/add`, {
                     method: 'POST',
                     headers: {
@@ -64,62 +60,73 @@ export const ActualParams = (props: Props) => {
                     body: JSON.stringify({
                         ...search,
                     }),
-                })
-
+                });
                 const data = await res.json();
-                console.log(data);
-                if (data.message) {
+                if (data.message === 'Unauthorized') {
                     setIsLoggedIn(false);
                 }
-                if (data.isSuccess) {
-                    setFav('y');
+                if (data.id) {
+                    setIsFav(data.id);
                 } else {
-                    setFav('')
+                    setIsFav('');
                 }
-
-
             } finally {
                 // setLoading(false);
             }
         })()
-}
+    }
 
-return (
-    <>
-        <div className="actual-weather-photo" style={
-
-            {
-                backgroundImage: `url(${link})`
+    const removeFavFromList = async () => {
+        try {
+            const res = await fetch(`http://localhost:3001/city/remove/${isFav}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            })
+            const data = await res.json();
+            if (data.message === 'Unauthorized') {
+                setIsLoggedIn(false);
             }
-        }>
-        </div>
-        <div className="actual-weather">
-            <p>{new Date((actualWeather.time + actualWeather.timezone) * 1000).toUTCString()}</p>
-            <div className="actual-weather-name">
-                <p>{search.name}</p>
-                {isLoggedIn && <button className={fav && "added"} onClick={() => saveToFavorites()}><FontAwesomeIcon icon={solid("heart")}/></button>}
-            </div>
-            <p className="state">{search.state &&
-                `${search.state}, `
-            }{search.country}</p>
-            <p>{capitalizeFirstLetter(actualWeather.desc)}</p>
-            <p className="temp">{actualWeather.temp.toFixed()}°</p>
-            <p>Feels like: {Number(actualWeather.tempSensed).toFixed()}°</p>
-            <div>
-                <p>H: {actualWeather.tempMax.toFixed()}°</p>
-                <p>L: {actualWeather.tempMin.toFixed()}°</p>
-            </div>
-            <div>
-                <div><p>Cloudiness:</p> <p> {actualWeather.clouds}%</p></div>
-                <div><p>Humidity:</p> <p>{actualWeather.humidity}%</p></div>
-                <div><p>Pressure:</p> <p>{actualWeather.pressure}hPa</p></div>
-                <div><p>Rain:</p> <p>{actualWeather.rain.toFixed(1)}mm</p></div>
-                <div><p>Snow:</p> <p>{actualWeather.snow.toFixed(1)}mm</p></div>
-                <div><p>Wind:</p> <p>{(actualWeather.wind * 3600 / 1000).toFixed()}km/h</p></div>
-            </div>
+            setIsFav('');
+        } finally {
+            // setLoading(false);
+        }
+    }
 
-        </div>
-    </>
-
-);
+    return (
+        <>
+            <div className="actual-weather-photo" style={{backgroundImage: `url(${link})`}}></div>
+            <div className="actual-weather">
+                <p>{new Date((actualWeather.time + actualWeather.timezone) * 1000).toUTCString()}</p>
+                <div className="actual-weather-name">
+                    <p>{search.name}</p>
+                    {isLoggedIn && <button className={isFav && "added"} onClick={async () => {
+                        if (isFav) {
+                            await removeFavFromList()
+                        } else {
+                            await saveToFavorites()
+                        }
+                    }}><FontAwesomeIcon
+                        icon={solid("heart")}/></button>}
+                </div>
+                <p className="state">{search.state &&
+                    `${search.state}, `
+                }{search.country}</p>
+                <p>{capitalizeFirstLetter(actualWeather.desc)}</p>
+                <p className="temp">{actualWeather.temp.toFixed()}°</p>
+                <p>Feels like: {Number(actualWeather.tempSensed).toFixed()}°</p>
+                <div>
+                    <p>H: {actualWeather.tempMax.toFixed()}°</p>
+                    <p>L: {actualWeather.tempMin.toFixed()}°</p>
+                </div>
+                <div>
+                    <div><p>Cloudiness:</p> <p> {actualWeather.clouds}%</p></div>
+                    <div><p>Humidity:</p> <p>{actualWeather.humidity}%</p></div>
+                    <div><p>Pressure:</p> <p>{actualWeather.pressure}hPa</p></div>
+                    <div><p>Rain:</p> <p>{actualWeather.rain.toFixed(1)}mm</p></div>
+                    <div><p>Snow:</p> <p>{actualWeather.snow.toFixed(1)}mm</p></div>
+                    <div><p>Wind:</p> <p>{(actualWeather.wind * 3600 / 1000).toFixed()}km/h</p></div>
+                </div>
+            </div>
+        </>
+    );
 }
