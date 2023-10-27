@@ -12,17 +12,26 @@
 
 .fav-list li {
     display: flex;
-    width: 100%;
-    justify-content: space-around;
     align-items: center;
-    height: 100px;
-    font-size: 12px;
+    justify-content: space-evenly;
     background-image: url("../../../public/haze.png");
     background-color: rgba(0, 0, 0, 0.5);
     background-position: center;
     background-size: cover;
+    width: 100%;
     margin: 5px auto;
     border-radius: 12px;
+    min-height: 100px;
+    font-size: 12px;
+}
+
+.fav-list .fav-link {
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+    align-items: center;
+    color: black;
+    text-decoration: none;
 }
 
 .fav-list p {
@@ -30,24 +39,43 @@
     text-align: center;
 }
 
+.fav-list p.city {
+    margin: 8px;
+}
+
+.fav-list p.temp {
+    font-size: 20px;
+}
+
+.fav-list div.params {
+    display: flex;
+    max-width: 279px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .fav-list p.param {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     height: 40px;
+    width: 70px;
     line-height: 40px;
     color: white;
     border-radius: 12px;
-    margin: 2px;
+    /*margin: 2px;*/
     cursor: pointer;
+    margin: 2px auto;
 }
 
 .fav-list p.remove {
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
     font-size: 20px;
     width: 15px;
     cursor: pointer;
     pointer-events: auto;
 }
+
 .fav-list p.remove:hover {
-    color: rgba(255,0,0,0.5);
+    color: rgba(255, 0, 0, 0.5);
 }
 

@@ -11,6 +11,7 @@
 }
 
 .register .msg {
+    margin: 0;
     font-size: 14px;
     color: #a61717;
 }
@@ -36,7 +37,7 @@
 }
 
 .register button {
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 16px;
     font-weight: bold;
     padding: 15px 25px;
@@ -51,5 +52,18 @@
 .register button:hover {
     background-color: rgba(0, 0, 0, 0.6);
     color: lightgray;
+}
+
+.register .forms {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+.register form {
+    width: 40%;
+    min-width: 300px;
+    margin: 30px auto;
 }
 

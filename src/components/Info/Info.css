@@ -1,7 +1,7 @@
 .info {
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 7px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border-radius: 12px;
     padding: 30px;
     text-align: center;
     margin: 30px auto;

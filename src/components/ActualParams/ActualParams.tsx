@@ -22,6 +22,8 @@ export const ActualParams = (props: Props) => {
     const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
     const [isFav, setIsFav] = useState('');
 
+    const dateArr = new Date((actualWeather.time + actualWeather.timezone) * 1000).toUTCString().split(" ")
+
     useEffect(() => {
         actualWeatherSetLink(actualWeather, setLink);
     }, [actualWeather.desc])
@@ -48,32 +50,30 @@ export const ActualParams = (props: Props) => {
     }, [search])
 
 
-    const saveToFavorites = () => {
-        (async () => {
-            try {
-                const res = await fetch(`http://localhost:3001/city/add`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        ...search,
-                    }),
-                });
-                const data = await res.json();
-                if (data.message === 'Unauthorized') {
-                    setIsLoggedIn(false);
-                }
-                if (data.id) {
-                    setIsFav(data.id);
-                } else {
-                    setIsFav('');
-                }
-            } finally {
-                // setLoading(false);
+    const saveToFavorites = async () => {
+        try {
+            const res = await fetch(`http://localhost:3001/city/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    ...search,
+                }),
+            });
+            const data = await res.json();
+            if (data.message === 'Unauthorized') {
+                setIsLoggedIn(false);
             }
-        })()
+            if (data.id) {
+                setIsFav(data.id);
+            } else {
+                setIsFav('');
+            }
+        } finally {
+            // setLoading(false);
+        }
     }
 
     const removeFavFromList = async () => {
@@ -96,7 +96,8 @@ export const ActualParams = (props: Props) => {
         <>
             <div className="actual-weather-photo" style={{backgroundImage: `url(${link})`}}></div>
             <div className="actual-weather">
-                <p>{new Date((actualWeather.time + actualWeather.timezone) * 1000).toUTCString()}</p>
+                <p>{dateArr.slice(0,4).join(" ")}</p>
+                <p>{dateArr[4].slice(0,5)}</p>
                 <div className="actual-weather-name">
                     <p>{search.name}</p>
                     {isLoggedIn && <button className={isFav && "added"} onClick={async () => {

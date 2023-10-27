@@ -3,8 +3,10 @@ import {ActualWeather, Favorites} from "../../types/weather";
 import {apiKey} from "../../constants";
 import {actualWeatherSetLink} from "../../utils/actualWeatherSetLink";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
+import {regular, solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {LoginContext} from "../../contexts/login.context";
+import {Link} from "react-router-dom";
+import {SearchContext} from "../../contexts/search.context";
 
 interface Props {
     fav: Favorites,
@@ -12,6 +14,7 @@ interface Props {
 }
 
 export const FavSingle = (props: Props) => {
+    const {setSearch} = useContext(SearchContext);
     const {setIsLoggedIn} = useContext(LoginContext);
     const {fav, getFavoritesList} = props;
     const [link, setLink] = useState<string>('../../../public/haze.png');
@@ -85,21 +88,34 @@ export const FavSingle = (props: Props) => {
         }
     }
 
-    return <li style={
-        {
-            backgroundImage: `url(${link})`
-        }
-    }>
-        <p>{dateArr[0]} {dateArr[4].slice(0, 5)}</p>
-        <p>{fav.name}, {fav.state}, {fav.country}</p>
-        <p className="param">{favActualWeather.temp.toFixed()}°</p>
-        <p className="param">{favActualWeather.clouds}%</p>
-        <p className="param">{(favActualWeather.wind * 3600 / 1000).toFixed()}km/h</p>
-        <p className="remove" onClick={removeFavFromList}><FontAwesomeIcon icon={solid("xmark")}/></p>
-        {/*<p>{favActualWeather.humidity}%</p>*/}
-        {/*<p>{favActualWeather.pressure}hPa</p>*/}
-        {/*<p>{favActualWeather.rain.toFixed(1)}mm</p>*/}
-        {/*<p>{favActualWeather.snow.toFixed(1)}mm</p>*/}
+    const changeSearchCity = () => {
+        setSearch({
+            name: fav.name,
+            state: fav.state,
+            country: fav.country,
+            lat: fav.lat,
+            lon: fav.lon,
+        });
+    }
 
+    return <li style={{backgroundImage: `url(${link})`}}>
+        <Link className="fav-link" to={'/'} onClick={changeSearchCity}>
+            <p className="city">{dateArr[0]} {dateArr[4].slice(0, 5)}</p>
+            <p className="city">{fav.name}, {fav.state ? ` ${fav.state},` : ""} {fav.country}</p>
+            <p className="temp">{favActualWeather.temp.toFixed()}°</p>
+            <div className="params">
+                <p className="param"><FontAwesomeIcon icon={solid("cloud")}/> {favActualWeather.clouds}%</p>
+                <p className="param"><FontAwesomeIcon icon={solid("droplet")}/> {favActualWeather.humidity}%</p>
+                <p className="param"><FontAwesomeIcon icon={solid("arrows-down-to-line")}/> {favActualWeather.pressure}hPa
+                </p>
+                <p className="param"><FontAwesomeIcon icon={solid("cloud-rain")}/> {favActualWeather.rain.toFixed(1)}mm
+                </p>
+                <p className="param"><FontAwesomeIcon icon={regular("snowflake")}/> {favActualWeather.snow.toFixed(1)}mm
+                </p>
+                <p className="param"><FontAwesomeIcon
+                    icon={solid("wind")}/> {(favActualWeather.wind * 3600 / 1000).toFixed()}km/h</p>
+            </div>
+        </Link>
+        <p className="remove" onClick={removeFavFromList}><FontAwesomeIcon icon={solid("xmark")}/></p>
     </li>
 }
