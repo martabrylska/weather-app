@@ -3,6 +3,35 @@
     margin: 0 auto;
 }
 
+.filters {
+    margin-top: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 12px;
+}
+
+.filters .register {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.filters .register label {
+    font-size: 14px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.filters .register select {
+    width: 150px;
+}
+
+.filters .register button {
+    font-size: 14px;
+    margin: 16px 30px;
+}
+
 .fav-list {
     display: flex;
     flex-direction: column;

@@ -2,13 +2,14 @@ import React, {useContext, useEffect, useState} from 'react';
 import {apiKey} from "../../constants";
 import {SearchContext} from "../../contexts/search.context";
 import {ActualWeather} from "../../types/weather";
-import {capitalizeFirstLetter} from "../../utils/capitalizeFirstLetter";
 import {ActualParams} from "../ActualParams/ActualParams";
 import {NextHoursParams} from "../NextHoursParams/NextHoursParams";
 import {NextDaysParams} from "../NextDaysParams/NextDaysParams";
+import {UnitsContext} from "../../contexts/units.context";
 
 export const WeatherParams = () => {
     const {search} = useContext(SearchContext);
+    const {units} = useContext(UnitsContext);
     const [actualWeather, setActualWeather] = useState<ActualWeather>({
         time: 0,
         temp: 0,
@@ -29,7 +30,7 @@ export const WeatherParams = () => {
     useEffect(() => {
         (async () => {
             if (search.lat && search.lon) {
-                const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=metric`);
+                const resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=${units}`);
                 const data = await resp.json();
                 console.log(data);
 

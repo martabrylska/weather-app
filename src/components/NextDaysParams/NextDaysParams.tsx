@@ -7,6 +7,7 @@ import {apiKey} from "../../constants";
 import {SearchContext} from "../../contexts/search.context";
 import {takeProperTimeForNight} from "../../utils/takeProperTimeForNight";
 import {takeProperTimeForDay} from "../../utils/takeProperTimeForDay";
+import {UnitsContext} from "../../contexts/units.context";
 
 interface Props {
     actualWeather: ActualWeather
@@ -18,13 +19,14 @@ export const NextDaysParams = (props: Props) => {
     const [nextNightsWeather, setNextNightsWeather] = useState<ShortTermWeather[]>([]);
 
     const {search} = useContext(SearchContext);
+    const {units} = useContext(UnitsContext);
 
     useEffect(() => {
         (async () => {
             if (search.lat && search.lon) {
                 setNextDaysWeather(prev => []);
                 setNextNightsWeather(prev => []);
-                const resp = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=metric`);
+                const resp = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=${units}`);
                 const data = await resp.json();
 
                 const nightList = data.list.filter((period: any) => period.dt_txt.split(' ')[1] === takeProperTimeForNight(props.actualWeather.timezone));
@@ -42,6 +44,8 @@ export const NextDaysParams = (props: Props) => {
                         icon: day.weather[0].icon,
                         desc: day.weather[0].description,
                         pod: day.sys.pod,
+                        rain: day.rain ? day.rain['3h'] : 0,
+                        snow: day.snow ? day.snow['3h'] : 0,
                     }]);
                 })
 
@@ -52,6 +56,8 @@ export const NextDaysParams = (props: Props) => {
                         icon: night.weather[0].icon,
                         desc: night.weather[0].description,
                         pod: night.sys.pod,
+                        rain: night.rain ? night.rain['3h'] : 0,
+                        snow: night.snow ? night.snow['3h'] : 0,
                     }]);
                 })
             }

@@ -3,6 +3,8 @@ import {Info} from "../Info/Info";
 
 import "../Register/Register.css";
 import {LoginContext} from "../../contexts/login.context";
+import {UnitsContext} from "../../contexts/units.context";
+import {Units} from "../../types/units";
 
 
 export const Login = () => {
@@ -13,7 +15,7 @@ export const Login = () => {
         password: '',
     });
 
-    const [units, setUnits] = useState('');
+    const {units, setUnits} = useContext(UnitsContext);
     const [password, setPassword] = useState({
         currentPassword: '',
         newPassword: '',
@@ -43,6 +45,10 @@ export const Login = () => {
 
             setIsLoggedIn(data.isSuccess);
 
+            if (data.isSuccess) {
+                setUnits(data.units);
+            }
+
             if (data.msg) {
                 setMsg(data.msg);
             }
@@ -60,6 +66,10 @@ export const Login = () => {
             });
 
             const data = await res.json();
+
+            if (data.isSuccess) {
+                setUnits('metric');
+            }
 
             setIsLoggedIn(!data.isSuccess);
             updateForm('password', '');
@@ -133,6 +143,7 @@ export const Login = () => {
 
             if (data.isSuccess) {
                 setMsgUnits('Units has been changed.')
+                setUnits(units as Units)
             } else {
                 setMsgUnits('Ups... Something went wrong.')
             }
@@ -141,7 +152,6 @@ export const Login = () => {
             // setLoading(false);
         }
     }
-
 
 
     const updateForm = (key: string, value: any) => {
@@ -216,7 +226,7 @@ export const Login = () => {
                                     name="units"
                                     value={units}
                                     onChange={e => {
-                                        setUnits(e.target.value);
+                                        setUnits(e.target.value as Units);
                                     }}>
                                     <option value="metric">Celsius, meter/sec</option>
                                     <option value="imperial">Fahrenheit, miles/hour</option>

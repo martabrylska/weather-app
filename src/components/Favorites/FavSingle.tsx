@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from 'react';
 import {ActualWeather, Favorites} from "../../types/weather";
 import {apiKey} from "../../constants";
 import {actualWeatherSetLink} from "../../utils/actualWeatherSetLink";
@@ -7,16 +7,20 @@ import {regular, solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {LoginContext} from "../../contexts/login.context";
 import {Link} from "react-router-dom";
 import {SearchContext} from "../../contexts/search.context";
+import {UnitsContext} from "../../contexts/units.context";
 
 interface Props {
     fav: Favorites,
     getFavoritesList: () => void,
+    setMainDesc: Dispatch<SetStateAction<string[]>>,
+    mainDesc: string[],
 }
 
 export const FavSingle = (props: Props) => {
     const {setSearch} = useContext(SearchContext);
     const {setIsLoggedIn} = useContext(LoginContext);
-    const {fav, getFavoritesList} = props;
+    const {units} = useContext(UnitsContext);
+    const {fav, getFavoritesList, mainDesc, setMainDesc} = props;
     const [link, setLink] = useState<string>('../../../public/haze.png');
     const [favActualWeather, setFavActualWeather] = useState<ActualWeather>({
         time: 0,
@@ -45,7 +49,7 @@ export const FavSingle = (props: Props) => {
         try {
             (async () => {
                 if (fav.lat && fav.lon) {
-                    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${fav.lat}&lon=${fav.lon}&appid=${apiKey}&units=metric`);
+                    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${fav.lat}&lon=${fav.lon}&appid=${apiKey}&units=${units}`);
                     const data = await res.json();
 
                     setFavActualWeather({
@@ -63,13 +67,36 @@ export const FavSingle = (props: Props) => {
                         desc: data.weather[0].description,
                         short: data.weather[0].main,
                         timezone: data.timezone,
-                    })
+                    });
                 }
             })()
         } finally {
             // setLoading(false);
         }
     }, []);
+
+    useEffect(() => {
+        try {
+            (async () => {
+                if (favActualWeather.time) {
+                    setMainDesc( [...mainDesc, favActualWeather.short]);
+                    const resBE = await fetch(`http://localhost:3001/weather/add/${fav.id}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({
+                            ...favActualWeather,
+                        }),
+                    });
+                    const dataBE = await resBE.json();
+                }
+            })()
+        } finally {
+            // setLoading(false);
+        }
+    }, [favActualWeather]);
 
     const removeFavFromList = async () => {
         try {
@@ -113,7 +140,8 @@ export const FavSingle = (props: Props) => {
                 <p className="param"><FontAwesomeIcon icon={regular("snowflake")}/> {favActualWeather.snow.toFixed(1)}mm
                 </p>
                 <p className="param"><FontAwesomeIcon
-                    icon={solid("wind")}/> {(favActualWeather.wind * 3600 / 1000).toFixed()}km/h</p>
+                    icon={solid("wind")}/> {units === 'imperial' ? `${favActualWeather.wind.toFixed()} mph` : `${(favActualWeather.wind * 3600 / 1000).toFixed()}km/h`}
+                </p>
             </div>
         </Link>
         <p className="remove" onClick={removeFavFromList}><FontAwesomeIcon icon={solid("xmark")}/></p>

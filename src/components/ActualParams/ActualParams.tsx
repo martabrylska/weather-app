@@ -8,6 +8,7 @@ import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {LoginContext} from "../../contexts/login.context";
 import {actualWeatherSetLink} from "../../utils/actualWeatherSetLink";
+import {UnitsContext} from "../../contexts/units.context";
 
 interface Props {
     actualWeather: ActualWeather;
@@ -18,6 +19,7 @@ export const ActualParams = (props: Props) => {
     const {actualWeather} = props;
 
     const {search} = useContext(SearchContext);
+    const {units} = useContext(UnitsContext);
     const [link, setLink] = useState<string>('../../../public/haze.png');
     const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
     const [isFav, setIsFav] = useState('');
@@ -125,7 +127,7 @@ export const ActualParams = (props: Props) => {
                     <div><p>Pressure:</p> <p>{actualWeather.pressure}hPa</p></div>
                     <div><p>Rain:</p> <p>{actualWeather.rain.toFixed(1)}mm</p></div>
                     <div><p>Snow:</p> <p>{actualWeather.snow.toFixed(1)}mm</p></div>
-                    <div><p>Wind:</p> <p>{(actualWeather.wind * 3600 / 1000).toFixed()}km/h</p></div>
+                    <div><p>Wind:</p> <p>{units === 'imperial' ? `${actualWeather.wind.toFixed()}mph`: `${(actualWeather.wind * 3600 / 1000).toFixed()}km/h`}</p></div>
                 </div>
             </div>
         </>
