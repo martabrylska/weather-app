@@ -24,12 +24,3 @@ export interface ShortTermWeather {
         rain: number,
         snow: number,
 }
-
-export interface Favorites {
-        id: string;
-        name: string,
-        state: string,
-        country: string,
-        lat: number,
-        lon: number,
-}

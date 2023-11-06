@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {SearchCity} from "../types/city";
+import {SearchedCity} from "../types/city";
 
 export const SearchContext = createContext({
     search: {
@@ -9,5 +9,5 @@ export const SearchContext = createContext({
         lat: 0,
         lon: 0,
     },
-    setSearch: (s: SearchCity) => {},
+    setSearch: (s: SearchedCity) => {},
 });

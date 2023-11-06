@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
 import {Route, Routes} from "react-router-dom";
-import {Home} from "./components/Home/Home";
-import {Register} from "./components/Register/Register";
-import {Login} from "./components/Login/Login";
-import {FavoritesList} from "./components/Favorites/FavoritesList";
-import {Header} from "./components/Header/Header";
-import {LoginContext} from './contexts/login.context';
 import {useLocalStorage} from "./hooks/useLocalStorage";
+import {LoginContext} from './contexts/login.context';
 import {SearchContext} from './contexts/search.context';
-import { UnitsContext } from './contexts/units.context';
-
+import {UnitsContext} from './contexts/units.context';
+import {Home} from "./components/Home/Home";
+import {RegisterForm} from "./components/forms/RegisterForm";
+import {LoginForm} from "./components/forms/LoginForm";
+import {FavoritesList} from "./components/Favorites/FavoritesList";
+import {Header} from "./components/layouts/Header";
 
 export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useLocalStorage('is-logged-in', false);
-    const [units, setUnits] = useState('metric');
     const [search, setSearch] = useLocalStorage('searched-city', {
         name: "Warsaw",
         state: "Masovian Voivodeship",
@@ -21,6 +19,8 @@ export const App = () => {
         lat: 52.232,
         lon: 21.0067,
     })
+    const [units, setUnits] = useState('metric');
+
     return (
         <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
             <SearchContext.Provider value={{search, setSearch}}>
@@ -28,8 +28,8 @@ export const App = () => {
                     <Header/>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
-                        <Route path="/register" element={<Register/>}/>
-                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/register" element={<RegisterForm/>}/>
+                        <Route path="/login" element={<LoginForm/>}/>
                         <Route path="/favorites" element={<FavoritesList/>}/>
                     </Routes>
                 </UnitsContext.Provider>
