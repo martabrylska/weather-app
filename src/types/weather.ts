@@ -10,9 +10,9 @@ export interface ActualWeather {
         clouds: number;
         rain: number;
         snow: number;
-        desc: string,
-        short: string,
-        timezone: number,
+        desc: string;
+        short: string;
+        timezone: number;
     }
 
 export interface ShortTermWeather {
@@ -21,13 +21,6 @@ export interface ShortTermWeather {
         desc: string,
         icon: string,
         pod: string,
-}
-
-export interface Favorites {
-        id: string;
-        name: string,
-        state: string,
-        country: string,
-        lat: number,
-        lon: number,
+        rain: number,
+        snow: number,
 }

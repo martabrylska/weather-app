@@ -1,0 +1,106 @@
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.form .loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #000;
+    border-bottom-color: transparent;
+    margin: 0 auto;
+}
+
+.form h1 {
+    margin: 50px auto;
+    text-align: center;
+}
+
+.form .msg {
+    margin: 0;
+    font-size: 14px;
+    color: #a61717;
+}
+
+.form label {
+    padding-left: 5px;
+}
+
+.form input, .form select {
+    text-align: center;
+    width: 250px;
+    margin-top: 4px;
+    padding-left: 10px;
+    height: 25px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 12px;
+    border: none;
+}
+
+.form option {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.form button {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 25px;
+    border-radius: 12px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.form button:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: lightgray;
+}
+
+.form .forms {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+.form form {
+    width: 40%;
+    min-width: 300px;
+    margin: 30px auto;
+}
+
+.filters {
+    margin-top: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 12px;
+}
+
+.filters .form {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.filters .form label {
+    font-size: 14px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.filters .form select {
+    width: 150px;
+}
+
+.filters .form button {
+    font-size: 14px;
+    margin: 16px 30px;
+}
+

@@ -1,5 +1,5 @@
 export const takeProperTimeForDay = (timezone: number): string => {
-    const tz = timezone/ 3600;
+    const tz = timezone / 3600;
 
     switch (tz) {
         case 12:

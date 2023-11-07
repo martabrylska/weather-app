@@ -1,6 +1,6 @@
 import {ActualWeather} from "../types/weather";
 
-export const actualWeatherSetLink = (actualWeather: ActualWeather, setLink: (link: string)=> void) => {
+export const setLinkForActualWeather = (actualWeather: ActualWeather, setLink: (link: string) => void) => {
     const localTime = new Date((actualWeather.time + actualWeather.timezone) * 1000).getUTCHours();
     if (actualWeather.short.toLowerCase() === "clouds" && actualWeather.desc.toLowerCase() === "few clouds") {
         (localTime > 6 && localTime < 20) ? setLink(`../../../few-clouds.png`) : setLink(`../../../few-cloudsn.png`);

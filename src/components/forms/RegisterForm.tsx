@@ -1,12 +1,12 @@
 import React, {SyntheticEvent, useState} from 'react';
-import {Info} from "../Info/Info";
+import {Info} from "../common/Info/Info";
+import {apiUrl} from "../../config/config";
 
-import "./Register.css";
+import "./form.css";
 
+export const RegisterForm = () => {
 
-export const Register = () => {
-
-    const [id, setId] = useState(null);
+    const [id, setId] = useState('');
     const [form, setForm] = useState({
         name: '',
         password: '',
@@ -18,35 +18,27 @@ export const Register = () => {
     const createAccount = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        // setLoading(true);
         if (form.password !== form.passwordCopy) {
             setMsg('Passwords are not the same. Try again.')
         } else {
-            try{
-                console.log(form);
-                const res = await fetch(`http://localhost:3001/user/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        ...form,
-                    }),
-                });
+            const res = await fetch(`${apiUrl}/user/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...form,
+                }),
+            });
 
-                const data = await res.json();
-                console.log(data);
+            const data = await res.json();
 
-                if (data.isSuccess) {
-                    setId(data.id);
-                }
+            if (data.isSuccess) {
+                setId(data.id);
+            }
 
-                if (data.msg) {
-                    setMsg(data.msg)
-                }
-
-            } finally {
-                // setLoading(false);
+            if (data.msg) {
+                setMsg(data.msg)
             }
         }
     }
@@ -59,11 +51,12 @@ export const Register = () => {
     }
 
     if (id) {
-        return <Info text={`Your account has been successfully created with id: ${id}. Please sign in to find out more options.`}/>
+        return <Info
+            text={`Your account has been successfully created with id: ${id}. Please sign in to find out more options.`}/>
     }
 
 
-    return <form action="" className="register" onSubmit={createAccount}>
+    return <form action="" className="form" onSubmit={createAccount}>
         <div className="actual-weather-photo"></div>
         <h1>Create your account:</h1>
         <p className="msg">{msg}</p>
@@ -110,14 +103,15 @@ export const Register = () => {
                 <select
                     name="units"
                     value={form.units}
-                    onChange={e => {updateForm('units', e.target.value);}}>
+                    onChange={e => {
+                        updateForm('units', e.target.value);
+                    }}>
                     <option value="metric">Celsius, meter/sec</option>
                     <option value="imperial">Fahrenheit, miles/hour</option>
                     <option value="standard">Kelvin, meter/sec</option>
                 </select>
             </label>
         </p>
-
         <button>Create account</button>
     </form>
 
