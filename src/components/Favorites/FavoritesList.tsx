@@ -4,6 +4,7 @@ import {Loader} from "../common/Loader/Loader";
 import {FiltersForm} from "../forms/FiltersForm";
 import {LoginContext} from "../../contexts/login.context";
 import {Favorites} from "../../types/city";
+import {apiUrl} from "../../config/config";
 
 import "./FavoritesList.css";
 
@@ -18,7 +19,7 @@ export const FavoritesList = () => {
     const getFavoritesList = async () => {
         setLoading(true)
         try {
-            const res = await fetch(`http://localhost:3001/city/user`, {
+            const res = await fetch(`${apiUrl}/city/user`, {
                 credentials: "include",
             })
             const data = await res.json();

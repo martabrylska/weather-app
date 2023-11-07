@@ -3,6 +3,7 @@ import {UnitsContext} from "../../contexts/units.context";
 import {LoginContext} from "../../contexts/login.context";
 import {Loader} from "../common/Loader/Loader";
 import {Units} from "../../types/units";
+import {apiUrl} from "../../config/config";
 
 export const ChangeUnitsForm = () => {
     const {units, setUnits} = useContext(UnitsContext);
@@ -14,7 +15,7 @@ export const ChangeUnitsForm = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch(`http://localhost:3001/user/units/${units}`, {
+            const res = await fetch(`${apiUrl}/user/units/${units}`, {
                 method: 'PATCH',
                 credentials: "include",
             });

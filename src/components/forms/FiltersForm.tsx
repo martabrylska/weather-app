@@ -1,6 +1,7 @@
 import React, {SyntheticEvent, useContext, useState} from 'react';
 import {LoginContext} from "../../contexts/login.context";
 import {Favorites} from "../../types/city";
+import {apiUrl} from "../../config/config";
 
 import "./form.css"
 
@@ -26,7 +27,7 @@ export const FiltersForm = (props: Props) => {
         setLoading(true);
 
         try {
-            const res = await fetch(`http://localhost:3001/city/filter`, {
+            const res = await fetch(`${apiUrl}/city/filter`, {
                 method: 'PATCH',
                 credentials: "include",
                 headers: {

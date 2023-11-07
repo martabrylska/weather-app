@@ -39,7 +39,6 @@ export const Home = () => {
                 if (search.lat && search.lon) {
                     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=${units}`);
                     const data = await res.json();
-                    console.log(data);
 
                     setActualWeather({
                         time: data.dt,

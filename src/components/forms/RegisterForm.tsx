@@ -1,5 +1,6 @@
 import React, {SyntheticEvent, useState} from 'react';
 import {Info} from "../common/Info/Info";
+import {apiUrl} from "../../config/config";
 
 import "./form.css";
 
@@ -17,33 +18,27 @@ export const RegisterForm = () => {
     const createAccount = async (e: SyntheticEvent) => {
         e.preventDefault();
 
-        // setLoading(true);
         if (form.password !== form.passwordCopy) {
             setMsg('Passwords are not the same. Try again.')
         } else {
-            try {
-                const res = await fetch(`http://localhost:3001/user/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        ...form,
-                    }),
-                });
+            const res = await fetch(`${apiUrl}/user/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...form,
+                }),
+            });
 
-                const data = await res.json();
+            const data = await res.json();
 
-                if (data.isSuccess) {
-                    setId(data.id);
-                }
+            if (data.isSuccess) {
+                setId(data.id);
+            }
 
-                if (data.msg) {
-                    setMsg(data.msg)
-                }
-
-            } finally {
-                // setLoading(false);
+            if (data.msg) {
+                setMsg(data.msg)
             }
         }
     }

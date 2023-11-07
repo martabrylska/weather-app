@@ -9,6 +9,7 @@ import {setLinkForActualWeather} from "../../utils/setLinkForActualWeather";
 import {LoginContext} from "../../contexts/login.context";
 import {SearchContext} from "../../contexts/search.context";
 import {UnitsContext} from "../../contexts/units.context";
+import {apiUrl} from "../../config/config";
 
 interface Props {
     fav: Favorites,
@@ -78,7 +79,7 @@ export const FavSingle = (props: Props) => {
     useEffect(() => {
         (async () => {
             if (favActualWeather.time) {
-                const res = await fetch(`http://localhost:3001/weather/add/${fav.id}`, {
+                const res = await fetch(`${apiUrl}/weather/add/${fav.id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -96,7 +97,7 @@ export const FavSingle = (props: Props) => {
     }, [favActualWeather]);
 
     const removeFavFromList = async () => {
-        const res = await fetch(`http://localhost:3001/city/remove/${fav.id}`, {
+        const res = await fetch(`${apiUrl}/city/remove/${fav.id}`, {
             method: 'DELETE',
             credentials: 'include',
         })

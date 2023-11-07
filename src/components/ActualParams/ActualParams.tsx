@@ -7,6 +7,7 @@ import {UnitsContext} from "../../contexts/units.context";
 import {ActualWeather} from "../../types/weather";
 import {capitalizeFirstLetter} from "../../utils/capitalizeFirstLetter";
 import {setLinkForActualWeather} from "../../utils/setLinkForActualWeather";
+import {apiUrl} from "../../config/config";
 
 import "./ActualParams.css";
 
@@ -33,7 +34,7 @@ export const ActualParams = (props: Props) => {
 
     useEffect(() => {
         (async () => {
-            const res = await fetch(`http://localhost:3001/city/get-one?lat=${search.lat}&lon=${search.lon}`, {
+            const res = await fetch(`${apiUrl}/city/get-one?lat=${search.lat}&lon=${search.lon}`, {
                 credentials: "include",
             })
             const data = await res.json();
@@ -50,7 +51,7 @@ export const ActualParams = (props: Props) => {
 
 
     const saveToFavorites = async () => {
-        const res = await fetch(`http://localhost:3001/city/add`, {
+        const res = await fetch(`${apiUrl}/city/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -73,7 +74,7 @@ export const ActualParams = (props: Props) => {
     }
 
     const removeFavFromList = async () => {
-            const res = await fetch(`http://localhost:3001/city/remove/${isFav}`, {
+            const res = await fetch(`${apiUrl}/city/remove/${isFav}`, {
                 method: 'DELETE',
                 credentials: 'include',
             })
