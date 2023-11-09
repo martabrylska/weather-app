@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Weather App</h1>  <img src="public/logo2.png" alt="logo"/>
+  <h1>Weather App</h1>  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/logo2.png" alt="logo"/>
 <p>Please see the page: <a href="https://weatherapp.networkmanager.pl/">https://weatherapp.networkmanager.pl/</a></p>
 </div>
 
@@ -7,10 +7,6 @@
 
 - [About the Project](#about-the-project-🎉)
     - [Screenshots](#screenshots-📺)
-        - [Home pages](#home-pages)
-        - [Register view](#register-view)
-        - [Login views](#login-views)
-        - [Favorites view](#favourites-view)
     - [Tech Stack](#tech-stack-🔧)
 - [Getting Started](#getting-started-🚀)
     - [Run the app locally](#run-the-app-locally)
@@ -22,33 +18,20 @@ The app show you actual weather. You can choose the place from cities all over t
 login panels.
 After signing in you can add city to your favorites list, where you can use filters. On login panel you can also change
 your password and units of measurement.
+The app uses eg.:
+- (FE) fetching data from external weather API: [https://openweathermap.org/api](https://openweathermap.org/api),
+- (FE) localStorage (React hook) to store username, searched city and logging info,
+- (FE) React contexts (logging info, serached city, units of measurment),
+- (BE) cookie to keep the logging session,
+- (BE) JWT token for user authorising.
 
 ### Screenshots 📺
 
-#### Home pages
-
-<div align="center">
-    <img src="public/app-screens/home.JPG" alt="home page"/>
-    <img src="public/app-screens/home2.JPG" alt="home page"/>
-</div>
-
-#### Register view
-
-<div align="center">
-    <img src="public/app-screens/register.JPG" alt="register view"/>
-</div>
-
-#### Login views
-
-<div align="center">
-    <img src="public/app-screens/login2.JPG" alt="login view"/>
-    <img src="public/app-screens/login.JPG" alt="login view"/>
-</div>
-
-#### Favourites view
-
-<div align="center">
-    <img src="public/app-screens/favorites.JPG" alt="favorites view"/>
+<div>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/home.JPG" alt="home page" width="220px" height="auto"/>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/register.JPG" alt="register view" width="220px" height="auto"/>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/login.JPG" alt="login view" width="220px" height="auto"/>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/favorites.JPG" alt="favorites view" width="220px" height="auto"/>
 </div>
 
 ### Tech stack 🔧
@@ -67,7 +50,7 @@ your password and units of measurement.
 
 1. Get a free API Key at: [https://openweathermap.org/api](https://openweathermap.org/api).
    You have to register first.
-2. Clone the repo:
+2. Clone the frontend repo [https://github.com/martabrylska/weather-app](https://github.com/martabrylska/weather-app):
 
    ` git clone https://github.com/martabrylska/weather-app.git`
 
@@ -104,7 +87,3 @@ your password and units of measurement.
 ## Live 📍
 
 <p><a href="https://weatherapp.networkmanager.pl/">https://weatherapp.networkmanager.pl/</a></p>
-
-
-
-
