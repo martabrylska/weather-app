@@ -28,10 +28,10 @@ The app uses eg.:
 ### Screenshots 📺
 
 <div>
-  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/home.JPG" alt="home page" width="220px" height="auto"/>
-  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/register.JPG" alt="register view" width="220px" height="auto"/>
-  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/login.JPG" alt="login view" width="220px" height="auto"/>
-  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/favorites.JPG" alt="favorites view" width="220px" height="auto"/>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/home.JPG" alt="home page" width="200px" height="auto"/>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/register.JPG" alt="register view" width="200px" height="auto"/>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/login.JPG" alt="login view" width="200px" height="auto"/>
+  <img src="https://raw.githubusercontent.com/martabrylska/weather-app/main/public/app-screens/favorites.JPG" alt="favorites view" width="200px" height="auto"/>
 </div>
 
 ### Tech stack 🔧
