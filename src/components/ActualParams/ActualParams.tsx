@@ -34,21 +34,22 @@ export const ActualParams = (props: Props) => {
 
     useEffect(() => {
         (async () => {
-            const res = await fetch(`${apiUrl}/city/get-one?lat=${search.lat}&lon=${search.lon}`, {
-                credentials: "include",
-            })
-            const data = await res.json();
-            if (data.message === 'Unauthorized') {
-                setIsLoggedIn(false);
-            }
-            if (data.id) {
-                setIsFav(data.id)
-            } else {
-                setIsFav('')
+            if (isLoggedIn) {
+                const res = await fetch(`${apiUrl}/city/get-one?lat=${search.lat}&lon=${search.lon}`, {
+                    credentials: "include",
+                })
+                const data = await res.json();
+                if (data.message === 'Unauthorized') {
+                    setIsLoggedIn(false);
+                }
+                if (data.id) {
+                    setIsFav(data.id)
+                } else {
+                    setIsFav('')
+                }
             }
         })()
     }, [search])
-
 
     const saveToFavorites = async () => {
         const res = await fetch(`${apiUrl}/city/add`, {
@@ -74,15 +75,15 @@ export const ActualParams = (props: Props) => {
     }
 
     const removeFavFromList = async () => {
-            const res = await fetch(`${apiUrl}/city/remove/${isFav}`, {
-                method: 'DELETE',
-                credentials: 'include',
-            })
-            const data = await res.json();
-            if (data.message === 'Unauthorized') {
-                setIsLoggedIn(false);
-            }
-            setIsFav('');
+        const res = await fetch(`${apiUrl}/city/remove/${isFav}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+        const data = await res.json();
+        if (data.message === 'Unauthorized') {
+            setIsLoggedIn(false);
+        }
+        setIsFav('');
     }
 
     return (
