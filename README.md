@@ -1,46 +1,110 @@
-# Getting Started with Create React App
+<div align="center">
+  <h1>Weather App</h1>  <img src="public/logo2.png" alt="logo"/>
+<p>Please see the page: <a href="https://weatherapp.networkmanager.pl/">https://weatherapp.networkmanager.pl/</a></p>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Table of Contents
 
-## Available Scripts
+- [About the Project](#about-the-project-🎉)
+    - [Screenshots](#screenshots-📺)
+        - [Home pages](#home-pages)
+        - [Register view](#register-view)
+        - [Login views](#login-views)
+        - [Favorites view](#favourites-view)
+    - [Tech Stack](#tech-stack-🔧)
+- [Getting Started](#getting-started-🚀)
+    - [Run the app locally](#run-the-app-locally)
+- [Live](#live-📍)
 
-In the project directory, you can run:
+## About the project 🎉
 
-### `npm start`
+The app show you actual weather. You can choose the place from cities all over the world. There are also register and
+login panels.
+After signing in you can add city to your favorites list, where you can use filters. On login panel you can also change
+your password and units of measurement.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Screenshots 📺
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Home pages
 
-### `npm test`
+<div align="center">
+    <img src="public/app-screens/home.JPG" alt="home page"/>
+    <img src="public/app-screens/home2.JPG" alt="home page"/>
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Register view
 
-### `npm run build`
+<div align="center">
+    <img src="public/app-screens/register.JPG" alt="register view"/>
+</div>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Login views
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<div align="center">
+    <img src="public/app-screens/login2.JPG" alt="login view"/>
+    <img src="public/app-screens/login.JPG" alt="login view"/>
+</div>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Favourites view
 
-### `npm run eject`
+<div align="center">
+    <img src="public/app-screens/favorites.JPG" alt="favorites view"/>
+</div>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Tech stack 🔧
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  <ul>
+    <li><a href="https://react.dev/">React.js</a></li>
+    <li><a href="https://nestjs.com/">Nest.js</a></li>
+    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
+    <li><a href="https://typeorm.io/">TypeORM</a></li>
+    <li><a href="https://jwt.io/">JWT Token</a></li>
+  </ul>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Getting started 🚀
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Run the app locally
 
-## Learn More
+1. Get a free API Key at: [https://openweathermap.org/api](https://openweathermap.org/api).
+   You have to register first.
+2. Clone the repo:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ` git clone https://github.com/martabrylska/weather-app.git`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. Make .env file and paste your API Key:
+
+   `REACT_APP_API_KEY="your_api_key"`
+
+4. Install NPM packages:
+
+   `npm install`
+
+5. Start the server development:
+
+   `npm start`
+
+6. Run the backend of the
+   app: [https://github.com/martabrylska/weather-app-BE](https://github.com/martabrylska/weather-app-BE)
+
+   `git clone https://github.com/martabrylska/weather-app-be.git`
+
+7. Go to file src/config/config.example.ts and change it to config.ts.
+
+   Uncomment the contents of the file and make configuration where is needed.
+
+8. Install NPM packages and start development mode:
+
+   `npm install`
+
+   `npm run start:dev`
+
+9. You can now test the app.
+
+
+## Live 📍
+
+<p><a href="https://weatherapp.networkmanager.pl/">https://weatherapp.networkmanager.pl/</a></p>
+
+
+
+
