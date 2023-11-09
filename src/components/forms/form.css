@@ -93,6 +93,7 @@
     font-size: 14px;
     margin-top: 16px;
     margin-bottom: 16px;
+    padding-left: 0;
 }
 
 .filters .form select {
@@ -101,6 +102,7 @@
 
 .filters .form button {
     font-size: 14px;
-    margin: 16px 30px;
+    margin: 16px 10px;
+    width: 130px;
 }
 
