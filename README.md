@@ -50,15 +50,17 @@ The app uses eg.:
 
 1. Get a free API Key at: [https://openweathermap.org/api](https://openweathermap.org/api).
    You have to register first.
-2. Clone the frontend repo [https://github.com/martabrylska/weather-app](https://github.com/martabrylska/weather-app):
+2. Clone the frontend repo: [https://github.com/martabrylska/weather-app](https://github.com/martabrylska/weather-app)
 
    ` git clone https://github.com/martabrylska/weather-app.git`
 
-3. Make .env file and paste your API Key:
+3. Make .env file in the main path and paste your API Key:
 
    `REACT_APP_API_KEY="your_api_key"`
 
-4. Install NPM packages:
+4. Install NPM packages: 
+
+   `cd weather-app`
 
    `npm install`
 
@@ -66,7 +68,7 @@ The app uses eg.:
 
    `npm start`
 
-6. Run the backend of the
+6. Open new terminal (at the same place as in the beginning) and run the backend of the
    app: [https://github.com/martabrylska/weather-app-BE](https://github.com/martabrylska/weather-app-BE)
 
    `git clone https://github.com/martabrylska/weather-app-be.git`
@@ -77,12 +79,13 @@ The app uses eg.:
 
 8. Install NPM packages and start development mode:
 
+   `cd weather-app-be`
+
    `npm install`
 
    `npm run start:dev`
 
 9. You can now test the app.
-
 
 ## Live 📍
 
