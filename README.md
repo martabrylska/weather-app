@@ -17,7 +17,6 @@
 This is my standalone full-stack app, that delivers real-time weather updates for cities worldwide. The app employs user
 authentication to enable personalized weather tracking and favorite city management. Users can conveniently filter and
 sort weather data based on their preferences, ensuring an intuitive and engaging experience. The app uses eg.:
-The app uses eg.:
 
 - (FE) fetching data from external weather API: [https://openweathermap.org/api](https://openweathermap.org/api),
 - (FE) localStorage (React hook) to store username, searched city and logging info,
