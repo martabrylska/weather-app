@@ -14,16 +14,16 @@
 
 ## About the project 🎉
 
-The app show you actual weather. You can choose the place from cities all over the world. There are also register and
-login panels.
-After signing in you can add city to your favorites list, where you can use filters. On login panel you can also change
-your password and units of measurement.
+This is my standalone full-stack app, that delivers real-time weather updates for cities worldwide. The app employs user
+authentication to enable personalized weather tracking and favorite city management. Users can conveniently filter and
+sort weather data based on their preferences, ensuring an intuitive and engaging experience. The app uses eg.:
 The app uses eg.:
+
 - (FE) fetching data from external weather API: [https://openweathermap.org/api](https://openweathermap.org/api),
 - (FE) localStorage (React hook) to store username, searched city and logging info,
-- (FE) React contexts (logging info, serached city, units of measurment),
+- (FE) React contexts (logging info, searched city, units of measurement),
 - (BE) cookie to keep the logging session,
-- (BE) JWT token for user authorising.
+- (BE) JWT token for user authentication.
 
 ### Screenshots 📺
 
@@ -58,7 +58,7 @@ The app uses eg.:
 
    `REACT_APP_API_KEY="your_api_key"`
 
-4. Install NPM packages: 
+4. Install NPM packages:
 
    `cd weather-app`
 
