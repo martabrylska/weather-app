@@ -57,13 +57,13 @@ export const Home = () => {
                         timezone: data.timezone,
                     })
                 }
-            } catch(e) {
+            } catch (e) {
                 setError(true);
             } finally {
                 setLoading(false);
             }
         })();
-    }, [search]);
+    }, [search, units]);
 
     if (loading) {
         return <Loader/>

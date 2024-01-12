@@ -24,12 +24,12 @@ export const NextHoursParams = (props: Props) => {
         try {
             (async () => {
                 if (search.lat && search.lon) {
-                    setNextHoursWeather([]);
                     const resp = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${search.lat}&lon=${search.lon}&cnt=5&appid=${apiKey}&units=${units}`);
                     const data = await resp.json();
                     const list = data.list;
+                    setNextHoursWeather([]);
 
-                    list.map((hour: any) => {
+                    list.forEach((hour: any) => {
                         setNextHoursWeather(nextHoursWeather => [...nextHoursWeather, {
                             time: hour.dt,
                             temp: hour.main.temp,
@@ -46,7 +46,7 @@ export const NextHoursParams = (props: Props) => {
         } finally {
             setLoading(false);
         }
-    }, [search]);
+    },[search, units]);
 
     return <div className="next-hours">
         {
