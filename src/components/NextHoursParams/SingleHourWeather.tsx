@@ -20,7 +20,7 @@ export const SingleHourWeather = (props: Props) => {
         <div className="precipitation"><FontAwesomeIcon icon={solid("droplet")}/>
             <p>{(props.nextHoursWeather.rain + props.nextHoursWeather.snow).toFixed(1)}mm</p></div>
         <p>
-            {Number(props.nextHoursWeather.temp).toFixed()}°
+            {Number(props.nextHoursWeather.temp).toFixed() === '-0' ? '0' : Number(props.nextHoursWeather.temp).toFixed()}°
         </p>
     </div>
 };

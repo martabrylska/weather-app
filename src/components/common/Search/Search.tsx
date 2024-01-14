@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {SearchContext} from "../../../contexts/search.context";
-import {apiKey} from "../../../constants";
 import {SearchedCity} from "../../../types/city";
+import {findCitiesForInputVal} from "../../../api/weatherApi/findCitiesForInputVal";
 
 import "./Search.css";
 
@@ -16,10 +16,9 @@ export const Search = () => {
         setSearchCityList([]);
         (async () => {
             if (inputVal) {
-                const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${inputVal}&limit=5&appid=${apiKey}`);
-                const data = await res.json();
+                const cities = await findCitiesForInputVal(inputVal);
 
-                data.map((city: any) => {
+                cities.forEach((city: any) => {
                     setSearchCityList(searchCityList => [
                         ...searchCityList, {
                             name: city.name,

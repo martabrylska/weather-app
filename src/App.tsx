@@ -9,6 +9,7 @@ import {RegisterForm} from "./components/forms/RegisterForm";
 import {LoginForm} from "./components/forms/LoginForm";
 import {FavoritesList} from "./components/Favorites/FavoritesList";
 import {Header} from "./components/layouts/Header";
+import {Units} from "./types/units";
 
 export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useLocalStorage('is-logged-in', false);
@@ -19,7 +20,7 @@ export const App = () => {
         lat: 52.232,
         lon: 21.0067,
     })
-    const [units, setUnits] = useState('metric');
+    const [units, setUnits] = useState(Units.metric);
 
     return (
         <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>

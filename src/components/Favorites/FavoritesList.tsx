@@ -4,7 +4,7 @@ import {Loader} from "../common/Loader/Loader";
 import {FiltersForm} from "../forms/FiltersForm";
 import {LoginContext} from "../../contexts/login.context";
 import {Favorites} from "../../types/city";
-import {apiUrl} from "../../config/config";
+import {getCitiesForUser} from "../../api/localApi/getCitiesForUser";
 
 import "./FavoritesList.css";
 
@@ -19,10 +19,7 @@ export const FavoritesList = () => {
     const getFavoritesList = async () => {
         setLoading(true)
         try {
-            const res = await fetch(`${apiUrl}/city/user`, {
-                credentials: "include",
-            })
-            const data = await res.json();
+            const data = await getCitiesForUser();
             if (data.message === 'Unauthorized') {
                 setIsLoggedIn(false);
             }
@@ -34,7 +31,7 @@ export const FavoritesList = () => {
 
     useEffect(() => {
         (async () => {
-            await getFavoritesList()
+            await getFavoritesList();
         })()
     }, [])
 

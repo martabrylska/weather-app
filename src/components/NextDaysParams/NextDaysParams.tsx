@@ -6,7 +6,7 @@ import {Loader} from "../common/Loader/Loader";
 import {takeProperTimeForNight} from "../../utils/takeProperTimeForNight";
 import {takeProperTimeForDay} from "../../utils/takeProperTimeForDay";
 import {ActualWeather, ShortTermWeather} from "../../types/weather";
-import {apiKey} from "../../constants";
+import {getForecastedWeather} from "../../api/weatherApi/getForcastedWeather";
 
 import "./NextDaysParams.css"
 
@@ -28,10 +28,7 @@ export const NextDaysParams = (props: Props) => {
         try {
             (async () => {
                 if (search.lat && search.lon) {
-                    setNextDaysWeather([]);
-                    setNextNightsWeather( []);
-                    const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=${units}`);
-                    const data = await res.json();
+                    const data = await getForecastedWeather(search.lat, search.lon, units);
 
                     const nightList = data.list.filter((period: any) => period.dt_txt.split(' ')[1] === takeProperTimeForNight(props.actualWeather.timezone));
                     const dayList = data.list.filter((period: any) => period.dt_txt.split(' ')[1] === takeProperTimeForDay(props.actualWeather.timezone));
@@ -40,7 +37,10 @@ export const NextDaysParams = (props: Props) => {
                         nightList.splice(0, 1);
                     }
 
-                    dayList.map((day: any) => {
+                    setNextDaysWeather([]);
+                    setNextNightsWeather( []);
+
+                    dayList.forEach((day: any) => {
                         setNextDaysWeather(nextDaysWeather => [...nextDaysWeather, {
                             time: day.dt,
                             temp: day.main.temp,
@@ -52,7 +52,7 @@ export const NextDaysParams = (props: Props) => {
                         }]);
                     })
 
-                    nightList.map((night: any) => {
+                    nightList.forEach((night: any) => {
                         setNextNightsWeather(nextNightsWeather => [...nextNightsWeather, {
                             time: night.dt,
                             temp: night.main.temp,
@@ -68,7 +68,7 @@ export const NextDaysParams = (props: Props) => {
         } finally {
             setLoading(false);
         }
-    }, [search]);
+    }, [search, props.actualWeather.timezone, units]);
 
 
     return <div className="next-days">

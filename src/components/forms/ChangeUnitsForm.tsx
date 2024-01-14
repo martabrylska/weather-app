@@ -3,7 +3,7 @@ import {UnitsContext} from "../../contexts/units.context";
 import {LoginContext} from "../../contexts/login.context";
 import {Loader} from "../common/Loader/Loader";
 import {Units} from "../../types/units";
-import {apiUrl} from "../../config/config";
+import {changeUserUnits} from "../../api/localApi/changeUserUnits";
 
 export const ChangeUnitsForm = () => {
     const {units, setUnits} = useContext(UnitsContext);
@@ -15,11 +15,7 @@ export const ChangeUnitsForm = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch(`${apiUrl}/user/units/${units}`, {
-                method: 'PATCH',
-                credentials: "include",
-            });
-            const data = await res.json();
+            const data = await changeUserUnits(units);
             if (data.message === 'Unauthorized') {
                 setIsLoggedIn(false);
             }
@@ -49,9 +45,9 @@ export const ChangeUnitsForm = () => {
                     onChange={e => {
                         setUnits(e.target.value as Units);
                     }}>
-                    <option value="metric">Celsius, meter/sec</option>
-                    <option value="imperial">Fahrenheit, miles/hour</option>
-                    <option value="standard">Kelvin, meter/sec</option>
+                    <option value={Units.metric}>Celsius, meter/sec</option>
+                    <option value={Units.imperial}>Fahrenheit, miles/hour</option>
+                    <option value={Units.standard}>Kelvin, meter/sec</option>
                 </select>
             </label>
         </p>

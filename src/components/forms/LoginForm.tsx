@@ -6,7 +6,9 @@ import {ChangePasswordForm} from "./ChangePasswordForm";
 import {ChangeUnitsForm} from "./ChangeUnitsForm";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 import {Loader} from "../common/Loader/Loader";
-import {apiUrl} from "../../config/config";
+import {login} from "../../api/localApi/login";
+import {logout} from "../../api/localApi/logout";
+import {Units} from "../../types/units";
 
 import "./form.css";
 
@@ -27,19 +29,7 @@ export const LoginForm = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch(`${apiUrl}/auth/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                    ...form,
-                }),
-            });
-
-            const data = await res.json();
-
+            const data = await login(form);
             if (data.isSuccess) {
                 setIsLoggedIn(data.isSuccess);
                 setUnits(data.units);
@@ -48,7 +38,6 @@ export const LoginForm = () => {
             if (data.msg) {
                 setMsg(data.msg);
             }
-
         } finally {
             setLoading(false);
         }
@@ -57,15 +46,10 @@ export const LoginForm = () => {
     const signOut = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${apiUrl}/auth/logout`, {
-                credentials: "include",
-            });
-
-            const data = await res.json();
+            const data = await logout();
             if (data.isSuccess) {
-                setUnits('metric');
+                setUnits(Units.metric);
             }
-
             setIsLoggedIn(false);
             updateForm('password', '');
             updateForm('name', '');

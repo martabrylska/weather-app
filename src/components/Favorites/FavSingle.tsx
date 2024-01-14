@@ -2,14 +2,16 @@ import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from '
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {regular, solid} from "@fortawesome/fontawesome-svg-core/import.macro";
-import {apiKey} from "../../constants";
 import {ActualWeather} from "../../types/weather";
 import {Favorites} from "../../types/city";
 import {setLinkForActualWeather} from "../../utils/setLinkForActualWeather";
 import {LoginContext} from "../../contexts/login.context";
 import {SearchContext} from "../../contexts/search.context";
 import {UnitsContext} from "../../contexts/units.context";
-import {apiUrl} from "../../config/config";
+import {getActualWeather} from "../../api/weatherApi/getActualWeather";
+import {removeFromFavorites} from "../../api/localApi/removeFromFavorites";
+import {addWeatherForFavCity} from "../../api/localApi/addWeatherForFavCity";
+import {Units} from "../../types/units";
 
 interface Props {
     fav: Favorites,
@@ -53,8 +55,7 @@ export const FavSingle = (props: Props) => {
     useEffect(() => {
         (async () => {
             if (fav.lat && fav.lon) {
-                const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${fav.lat}&lon=${fav.lon}&appid=${apiKey}&units=${units}`);
-                const data = await res.json();
+                const data = await getActualWeather(fav.lat, fav.lon, units);
 
                 setFavActualWeather({
                     time: data.dt,
@@ -79,17 +80,7 @@ export const FavSingle = (props: Props) => {
     useEffect(() => {
         (async () => {
             if (favActualWeather.time) {
-                const res = await fetch(`${apiUrl}/weather/add/${fav.id}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        ...favActualWeather,
-                    }),
-                });
-                const data = await res.json();
+                await addWeatherForFavCity(fav.id, favActualWeather);
                 setMainWeatherDescriptions(prev => [...prev, favActualWeather.short]);
                 setCountries(prev => [...prev, fav.country])
             }
@@ -97,11 +88,7 @@ export const FavSingle = (props: Props) => {
     }, [favActualWeather]);
 
     const removeFavFromList = async () => {
-        const res = await fetch(`${apiUrl}/city/remove/${fav.id}`, {
-            method: 'DELETE',
-            credentials: 'include',
-        })
-        const data = await res.json();
+        const data = await removeFromFavorites(fav.id);
         if (data.message === 'Unauthorized') {
             setIsLoggedIn(false);
         }
@@ -136,7 +123,7 @@ export const FavSingle = (props: Props) => {
                     icon={regular("snowflake")}/> {favActualWeather.snow.toFixed(1)}mm
                 </p>
                 <p className="param"><FontAwesomeIcon
-                    icon={solid("wind")}/> {units === 'imperial' ? `${favActualWeather.wind.toFixed()} mph` : `${(favActualWeather.wind * 3600 / 1000).toFixed()}km/h`}
+                    icon={solid("wind")}/> {units === Units.imperial ? `${favActualWeather.wind.toFixed()} mph` : `${(favActualWeather.wind * 3600 / 1000).toFixed()}km/h`}
                 </p>
             </div>
         </Link>
