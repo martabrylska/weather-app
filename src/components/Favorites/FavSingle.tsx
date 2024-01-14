@@ -11,6 +11,7 @@ import {UnitsContext} from "../../contexts/units.context";
 import {getActualWeather} from "../../api/weatherApi/getActualWeather";
 import {removeFromFavorites} from "../../api/localApi/removeFromFavorites";
 import {addWeatherForFavCity} from "../../api/localApi/addWeatherForFavCity";
+import {Units} from "../../types/units";
 
 interface Props {
     fav: Favorites,
@@ -122,7 +123,7 @@ export const FavSingle = (props: Props) => {
                     icon={regular("snowflake")}/> {favActualWeather.snow.toFixed(1)}mm
                 </p>
                 <p className="param"><FontAwesomeIcon
-                    icon={solid("wind")}/> {units === 'imperial' ? `${favActualWeather.wind.toFixed()} mph` : `${(favActualWeather.wind * 3600 / 1000).toFixed()}km/h`}
+                    icon={solid("wind")}/> {units === Units.imperial ? `${favActualWeather.wind.toFixed()} mph` : `${(favActualWeather.wind * 3600 / 1000).toFixed()}km/h`}
                 </p>
             </div>
         </Link>

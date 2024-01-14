@@ -20,7 +20,7 @@ export const App = () => {
         lat: 52.232,
         lon: 21.0067,
     })
-    const [units, setUnits] = useState<Units>('metric');
+    const [units, setUnits] = useState(Units.metric);
 
     return (
         <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>

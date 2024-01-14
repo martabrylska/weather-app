@@ -10,6 +10,7 @@ import {setLinkForActualWeather} from "../../utils/setLinkForActualWeather";
 import {getOneCity} from "../../api/localApi/getOneCity";
 import {addToFavorites} from "../../api/localApi/addToFavorites";
 import {removeFromFavorites} from "../../api/localApi/removeFromFavorites";
+import {Units} from "../../types/units";
 
 import "./ActualParams.css";
 
@@ -104,7 +105,7 @@ export const ActualParams = (props: Props) => {
                     <div><p>Rain:</p> <p>{actualWeather.rain.toFixed(1)}mm</p></div>
                     <div><p>Snow:</p> <p>{actualWeather.snow.toFixed(1)}mm</p></div>
                     <div><p>Wind:</p>
-                        <p>{units === 'imperial' ? `${actualWeather.wind.toFixed()}mph` : `${(actualWeather.wind * 3600 / 1000).toFixed()}km/h`}</p>
+                        <p>{units === Units.imperial ? `${actualWeather.wind.toFixed()}mph` : `${(actualWeather.wind * 3600 / 1000).toFixed()}km/h`}</p>
                     </div>
                 </div>
             </div>

@@ -6,9 +6,9 @@ import {Loader} from "../common/Loader/Loader";
 import {takeProperTimeForNight} from "../../utils/takeProperTimeForNight";
 import {takeProperTimeForDay} from "../../utils/takeProperTimeForDay";
 import {ActualWeather, ShortTermWeather} from "../../types/weather";
+import {getForecastedWeather} from "../../api/weatherApi/getForcastedWeather";
 
 import "./NextDaysParams.css"
-import {getForecastedWeather} from "../../api/weatherApi/getForcastedWeather";
 
 interface Props {
     actualWeather: ActualWeather

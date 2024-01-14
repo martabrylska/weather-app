@@ -3,9 +3,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {solid} from "@fortawesome/fontawesome-svg-core/import.macro";
 import {SearchContext} from "../../../contexts/search.context";
 import {SearchedCity} from "../../../types/city";
+import {findCitiesForInputVal} from "../../../api/weatherApi/findCitiesForInputVal";
 
 import "./Search.css";
-import {findCitiesForInputVal} from "../../../api/weatherApi/findCitiesForInputVal";
 
 export const Search = () => {
     const {setSearch} = useContext(SearchContext);

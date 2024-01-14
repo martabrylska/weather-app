@@ -8,6 +8,7 @@ import {useLocalStorage} from "../../hooks/useLocalStorage";
 import {Loader} from "../common/Loader/Loader";
 import {login} from "../../api/localApi/login";
 import {logout} from "../../api/localApi/logout";
+import {Units} from "../../types/units";
 
 import "./form.css";
 
@@ -47,7 +48,7 @@ export const LoginForm = () => {
         try {
             const data = await logout();
             if (data.isSuccess) {
-                setUnits('metric');
+                setUnits(Units.metric);
             }
             setIsLoggedIn(false);
             updateForm('password', '');

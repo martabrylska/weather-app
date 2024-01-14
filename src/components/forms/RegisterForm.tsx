@@ -12,7 +12,7 @@ export const RegisterForm = () => {
         name: '',
         password: '',
         passwordCopy: '',
-        units: 'metric' as Units,
+        units: Units.metric,
     });
     const [msg, setMsg] = useState('');
 
@@ -94,9 +94,9 @@ export const RegisterForm = () => {
                     onChange={e => {
                         updateForm('units', e.target.value);
                     }}>
-                    <option value="metric">Celsius, meter/sec</option>
-                    <option value="imperial">Fahrenheit, miles/hour</option>
-                    <option value="standard">Kelvin, meter/sec</option>
+                    <option value={Units.metric}>Celsius, meter/sec</option>
+                    <option value={Units.imperial}>Fahrenheit, miles/hour</option>
+                    <option value={Units.standard}>Kelvin, meter/sec</option>
                 </select>
             </label>
         </p>

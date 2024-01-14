@@ -45,9 +45,9 @@ export const ChangeUnitsForm = () => {
                     onChange={e => {
                         setUnits(e.target.value as Units);
                     }}>
-                    <option value="metric">Celsius, meter/sec</option>
-                    <option value="imperial">Fahrenheit, miles/hour</option>
-                    <option value="standard">Kelvin, meter/sec</option>
+                    <option value={Units.metric}>Celsius, meter/sec</option>
+                    <option value={Units.imperial}>Fahrenheit, miles/hour</option>
+                    <option value={Units.standard}>Kelvin, meter/sec</option>
                 </select>
             </label>
         </p>
