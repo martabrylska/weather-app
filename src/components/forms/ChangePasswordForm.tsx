@@ -1,7 +1,7 @@
 import React, {SyntheticEvent, useContext, useState} from "react";
 import {LoginContext} from "../../contexts/login.context";
 import {Loader} from "../common/Loader/Loader";
-import {apiUrl} from "../../config/config";
+import {changeUserPassword} from "../../api/localApi/changeUserPassword";
 
 export const ChangePasswordForm = () => {
 
@@ -23,19 +23,7 @@ export const ChangePasswordForm = () => {
         } else {
             setLoading(true);
             try {
-                const res = await fetch(`${apiUrl}/user/password`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        currentPassword: password.currentPassword,
-                        newPassword: password.newPassword,
-                    }),
-                });
-
-                const data = await res.json();
+                const data = await changeUserPassword(password.currentPassword, password.newPassword);
 
                 if (data.message === 'Unauthorized') {
                     setIsLoggedIn(false);

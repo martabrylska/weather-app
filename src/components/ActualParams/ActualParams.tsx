@@ -7,7 +7,9 @@ import {UnitsContext} from "../../contexts/units.context";
 import {ActualWeather} from "../../types/weather";
 import {capitalizeFirstLetter} from "../../utils/capitalizeFirstLetter";
 import {setLinkForActualWeather} from "../../utils/setLinkForActualWeather";
-import {apiUrl} from "../../config/config";
+import {getOneCity} from "../../api/localApi/getOneCity";
+import {addToFavorites} from "../../api/localApi/addToFavorites";
+import {removeFromFavorites} from "../../api/localApi/removeFromFavorites";
 
 import "./ActualParams.css";
 
@@ -24,7 +26,7 @@ export const ActualParams = (props: Props) => {
     const {isLoggedIn, setIsLoggedIn} = useContext(LoginContext);
 
     const [link, setLink] = useState<string>('../../../public/haze.png');
-    const [isFav, setIsFav] = useState('');
+    const [favId, setFavId] = useState('');
 
     const dateArr = new Date((actualWeather.time + actualWeather.timezone) * 1000).toUTCString().split(" ")
 
@@ -35,55 +37,37 @@ export const ActualParams = (props: Props) => {
     useEffect(() => {
         (async () => {
             if (isLoggedIn) {
-                const res = await fetch(`${apiUrl}/city/get-one?lat=${search.lat}&lon=${search.lon}`, {
-                    credentials: "include",
-                })
-                const data = await res.json();
+                const data = await getOneCity(search.lat, search.lon);
                 if (data.message === 'Unauthorized') {
                     setIsLoggedIn(false);
                 }
                 if (data.id) {
-                    setIsFav(data.id)
+                    setFavId(data.id)
                 } else {
-                    setIsFav('')
+                    setFavId('')
                 }
             }
         })()
     }, [search])
 
     const saveToFavorites = async () => {
-        const res = await fetch(`${apiUrl}/city/add`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                ...search,
-            }),
-        });
-        const data = await res.json();
+        const data = await addToFavorites(search)
         if (data.message === 'Unauthorized') {
             setIsLoggedIn(false);
         }
         if (data.id) {
-            setIsFav(data.id);
+            setFavId(data.id);
         } else {
-            setIsFav('');
+            setFavId('');
         }
-
     }
 
     const removeFavFromList = async () => {
-        const res = await fetch(`${apiUrl}/city/remove/${isFav}`, {
-            method: 'DELETE',
-            credentials: 'include',
-        })
-        const data = await res.json();
+        const data = await removeFromFavorites(favId);
         if (data.message === 'Unauthorized') {
             setIsLoggedIn(false);
         }
-        setIsFav('');
+        setFavId('');
     }
 
     return (
@@ -94,8 +78,8 @@ export const ActualParams = (props: Props) => {
                 <p>{dateArr[4].slice(0, 5)}</p>
                 <div className="actual-weather-name">
                     <p>{search.name}</p>
-                    {isLoggedIn && <button className={isFav && "added"} onClick={async () => {
-                        if (isFav) {
+                    {isLoggedIn && <button className={favId && "added"} onClick={async () => {
+                        if (favId) {
                             await removeFavFromList()
                         } else {
                             await saveToFavorites()

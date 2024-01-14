@@ -6,9 +6,9 @@ import {Loader} from "../common/Loader/Loader";
 import {takeProperTimeForNight} from "../../utils/takeProperTimeForNight";
 import {takeProperTimeForDay} from "../../utils/takeProperTimeForDay";
 import {ActualWeather, ShortTermWeather} from "../../types/weather";
-import {apiKey} from "../../constants";
 
 import "./NextDaysParams.css"
+import {getForecastedWeather} from "../../api/weatherApi/getForcastedWeather";
 
 interface Props {
     actualWeather: ActualWeather
@@ -28,8 +28,7 @@ export const NextDaysParams = (props: Props) => {
         try {
             (async () => {
                 if (search.lat && search.lon) {
-                    const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${search.lat}&lon=${search.lon}&appid=${apiKey}&units=${units}`);
-                    const data = await res.json();
+                    const data = await getForecastedWeather(search.lat, search.lon, units);
 
                     const nightList = data.list.filter((period: any) => period.dt_txt.split(' ')[1] === takeProperTimeForNight(props.actualWeather.timezone));
                     const dayList = data.list.filter((period: any) => period.dt_txt.split(' ')[1] === takeProperTimeForDay(props.actualWeather.timezone));
